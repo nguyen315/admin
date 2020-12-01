@@ -13,7 +13,7 @@ block content
         .row
           .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
             .page-header
-              h2.pageheader-title E-commerce Dashboard Template 
+              h2.pageheader-title E-commerce Dashboard
               p.pageheader-text
                 | Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.
               .page-breadcrumb
@@ -102,10 +102,17 @@ block content
                             td 
                               form(action="/deleteProduct" method="post")
                                 input(name="id" type="hidden" value=product._id)
-                                button(type="submit") delete
+                                button.btn.btn-outline-light(type='submit')
+                                 i.fas.fa-trash-alt  delete
+
+                                
                               form(action="/updateProductRender" method="post")
                                 input(name="id" type="hidden" value=product._id)
-                                button(type="submit") update
+                                button.btn.btn-outline-light.m-t-10(type='submit')
+                                  i.fas.fa-upload   upload
+                                
+                                //- input(name="id" type="hidden" value=product._id)
+                                //- button(type="submit") update
                             //- td
                             //-   span.badge-dot.badge-brand.mr-1
                             //-   | InTransit

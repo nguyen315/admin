@@ -21,10 +21,9 @@ block content
             label Images:
             br
             input(type="text" name="imgs" value=product.imgs)
-
           input(type="hidden" name="id" value=product._id)
-          
-          button(type="submit" ) save change
+          button.btn.btn-outline-light.m-t-30(type='submit') Save change
+
       else
         form(action="/addProduct", method="post")
           div
@@ -43,4 +42,4 @@ block content
             label Images:
             br
             input(type="text" name="imgs")
-          button(type="submit" ) add
+          button.btn.btn-outline-light.m-t-30(type='submit') Add
