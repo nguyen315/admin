@@ -1,0 +1,46 @@
+extends layout
+
+block content
+  .dashboard-wrapper
+    .container-fluid.dashboard-content
+      if product
+        form(action="/updateProduct", method="post")
+          div
+            label Cover:
+            br
+            input(type="text" name="cover" value=product.cover)
+          div
+            label Product Title:
+            br
+            input(type="text" name="title" value=product.title)
+          div
+            label Price:
+            br
+            input(type="number" name="basePrice" value=product.basePrice)
+          div
+            label Images:
+            br
+            input(type="text" name="imgs" value=product.imgs)
+
+          input(type="hidden" name="id" value=product._id)
+          
+          button(type="submit" ) save change
+      else
+        form(action="/addProduct", method="post")
+          div
+            label Cover:
+            br
+            input(type="text" name="cover")
+          div
+            label Product Title:
+            br
+            input(type="text" name="title")
+          div
+            label Price:
+            br
+            input(type="number" name="basePrice")
+          div
+            label Images:
+            br
+            input(type="text" name="imgs")
+          button(type="submit" ) add
