@@ -18,6 +18,8 @@ exports.productById = async (id) => {
 }
 
 exports.addProduct = async (cover, title, basePrice, imgs) => {
+    imgs = imgs.split(',')
+    imgs = imgs.map(x => x.trim())
     const booksCollection = db().collection('books');
     await booksCollection.insertOne({
         cover: cover,
@@ -33,6 +35,8 @@ exports.deleteProduct = async (id) => {
 }
 
 exports.updateProduct = async (id, cover, title, basePrice, imgs) => {
+    imgs = imgs.split(',')
+    imgs = imgs.map(x => x.trim())
     const booksCollection = db().collection('books');
     await booksCollection.updateOne({_id: ObjectID(id)}, {$set: { cover: cover,
                                                             title: title,
