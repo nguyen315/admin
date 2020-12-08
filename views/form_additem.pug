@@ -4,11 +4,13 @@ block content
   .dashboard-wrapper
     .container-fluid.dashboard-content
       if product
-        form(action="/updateProduct", method="post")
+        form(action="/updateProduct", method="post",enctype = "multipart/form-data")
           div
             label Cover:
             br
             input(type="text" name="cover" value=product.cover)
+            br
+            input(type="file",name= "coverImage")
           div
             label Product Title:
             br
@@ -25,11 +27,12 @@ block content
           button.btn.btn-outline-light.m-t-30(type='submit') Save change
 
       else
-        form(action="/addProduct", method="post")
+        form(action="/addProduct", method="post",enctype = "multipart/form-data")
           div
             label Cover:
             br
             input(type="text" name="cover")
+            
           div
             label Product Title:
             br
