@@ -13,7 +13,7 @@ block content
         .row
           .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
             .page-header
-              h2.pageheader-title E-commerce Dashboard
+              h2.pageheader-title Product Lists
               p.pageheader-text
                 | Nulla euismod urna eros, sit amet scelerisque torton lectus vel mauris facilisis faucibus at enim quis massa lobortis rutrum.
               .page-breadcrumb
@@ -21,7 +21,7 @@ block content
                   ol.breadcrumb
                     li.breadcrumb-item
                       a.breadcrumb-link(href='#') Dashboard
-                    li.breadcrumb-item.active(aria-current='page') E-Commerce Dashboard Template
+                    li.breadcrumb-item.active(aria-current='page') Product Lists
         // ==============================================================
         // end pageheader
         // ==============================================================
@@ -77,32 +77,52 @@ block content
                 h5.card-header
                   | Product Lists
                   a.btn.btn-outline-light.float-right(href='/addProduct') Add Product
-                          
+                  form.form-inline(action='/search' method='get')
+                    .form-group
+                      input.form-control(type='text', name='q',placeholder='Nhập tên sách')
+                    button.btn(type='submit')
+                      i.fa.fa-search
+                  
+                  form(method='get' action='/category')
+                    .form-group
+                      select.form-control(onchange='this.form.submit()' name='category')
+                        if currentCategory == 'all'
+                          option(value='all' seleted='true') All Categories
+                        else
+                          option(value='all') All Categories
+                        each category in categories
+                          if category == currentCategory
+                            option(selected='true') #{category}
+                          else
+                            option #{category}
+
                 .card-body.p-0
                   .table-responsive
                     table.table
                       thead.bg-light
-                        tr.border-0
-                          th.border-0 #
-                          th.border-0 Cover
-                          th.border-0 Product Name
-                          th.border-0 Product Id
-                          th.border-0 Quantity
-                          th.border-0 Base Price
-                          th.border-0 Action
+                        tr.border-0.d-flex
+                          th.border-0.col-1 #
+                          th.border-0.col-1 Cover
+                          th.border-0.col-3 Product Name
+                          //- th.border-0 Product Id
+                          //- th.border-0 Quantity
+                          th.border-0.col-3 Category
+                          th.border-0.col-2 Base Price
+                          th.border-0.col-2 Action
                           //- th.border-0 Status
                       tbody
                         each product, index in products
-                          tr
-                            td #{index + 1}
-                            td
+                          tr.d-flex
+                            td.col-1 #{index + 1}
+                            td.col-1
                               .m-r-10
                                 img.rounded(src=product.cover alt='user' width='45')
-                            td #{product.title}
-                            td #{product._id} 
-                            td 20
-                            td #{product.basePrice}
-                            td 
+                            td.col-3 #{product.name}
+                            //- td #{product._id} 
+                            //- td 20 Số lượng sản phẩm --> thêm sau
+                            td.col-3 #{product.title}
+                            td.col-2 #{product.basePrice}
+                            td.col-2
                               form(action="/deleteProduct" method="post")
                                 input(name="id" type="hidden" value=product._id)
                                 button.btn.btn-outline-light(type='submit')
@@ -162,16 +182,16 @@ block content
                 ul.pagination
                   if hasPrevPage
                     li.page-item
-                        a.page-link(href='?page=' + (currentPage - 1)) Previous
+                        a.page-link(href='?page=' + (currentPage - 1) + pageLink  ) Previous
                     li.page-item
-                        a.page-link(href='?page=' + (currentPage - 1)) #{currentPage - 1}
-                  li.page-item
-                    a.page-link(href='?page=' + currentPage) #{currentPage}
+                        a.page-link(href='?page=' + (currentPage - 1) + pageLink ) #{currentPage - 1}
+                  li.page-item.active
+                    a.page-link(href='?page=' + currentPage ) #{currentPage}
                   if hasNextPage
                     li.page-item
-                      a.page-link(href='?page=' + (currentPage + 1)) #{currentPage + 1}
+                      a.page-link(href='?page=' + (currentPage + 1) + pageLink ) #{currentPage + 1}
                     li.page-item
-                      a.page-link(href='?page=' + (currentPage + 1)) Next
+                      a.page-link(href='?page=' + (currentPage + 1) + pageLink ) Next
 
                           
             // ==============================================================
