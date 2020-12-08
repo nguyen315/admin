@@ -3,13 +3,43 @@ const fs = require('fs');
 const path = require('path');
 const productsModel = require('../models/products.model');
 
-exports.index = async function(req, res, next) {
+exports.index = async function (req, res, next) {
     const page = +req.query.page || 1;
     const perPage = 10;
+    const category = req.query.category;
+    const q = req.query.q;
+    let pageLink = "";
+    let currentCategory = "";
+    let filter = {};
+
+    if (category == 'all') {
+        currentCategory = 'all'
+    }
+    else if (category) {
+        filter.title = category;
+        currentCategory = category;
+        pageLink += "&category=" + category;
+    }
+
+    if (q) {
+        filter.name = new RegExp(q, 'i');
+        pageLink += "&q=" + q;
+    }
+    // console.log(pageLink);
+
     // get books from models
-    const productsCursor = await productsModel.list(page, perPage);
+    const productsCursor = await productsModel.list(filter, page, perPage);
     const products = await productsCursor.toArray();
 
+    // get all category
+    const allProducts = await productsModel.getAll();
+    var categories = [];
+    for (var i = 0; i < allProducts.length; i++) {
+        categories.push(allProducts[i].title);
+    }
+    categories = [...new Set(categories)];
+
+    // Lấy các thông tin cho pagination
     let hasNextPage, hasPrevPage;
     hasPrevPage = page > 1 ? true : false;
     if (await productsCursor.count() > ((page - 1) * perPage + products.length))
@@ -20,21 +50,24 @@ exports.index = async function(req, res, next) {
     // render page list
     res.render('index', {
         title: 'Dashboard',
+        currentCategory: category,
+        categories,
         products: products,
         hasNextPage,
         hasPrevPage,
-        currentPage: page
+        currentPage: page,
+        pageLink
     });
 
 }
 
-exports.addProductRender = function(req, res, next) {
+exports.addProductRender = function (req, res, next) {
     res.render('form_additem', {
         title: 'Add Item'
     });
 }
 
-exports.addProduct = async function(req, res, next) {
+exports.addProduct = async function (req, res, next) {
     const cover = req.body.cover;
     const name = req.body.title;
     const basePrice = req.body.basePrice;
@@ -44,14 +77,14 @@ exports.addProduct = async function(req, res, next) {
     res.redirect('/');
 }
 
-exports.deleteProduct = async function(req, res, next) {
+exports.deleteProduct = async function (req, res, next) {
     const id = req.body.id
-        // console.log(id)
+    // console.log(id)
     await productsModel.deleteProduct(id);
     res.redirect('/');
 }
 
-exports.updateProductRender = async function(req, res, next) {
+exports.updateProductRender = async function (req, res, next) {
     const id = req.body.id;
 
     // console.log("update render: ", id);
@@ -61,12 +94,12 @@ exports.updateProductRender = async function(req, res, next) {
         product: product
     })
 }
-exports.updateProduct = async function(req, res, next) {
+exports.updateProduct = async function (req, res, next) {
     const form = formidable({ multiples: true });
 
     form.parse(req, (err, fields, files) => {
         const id = fields.id;
-        const cover = fields.cover;
+        let cover = fields.cover;
         const title = fields.title;
         const basePrice = fields.basePrice;
         const imgs = fields.imgs;
@@ -78,23 +111,15 @@ exports.updateProduct = async function(req, res, next) {
         const coverImage = files.coverImage;
         if (coverImage && coverImage.size > 0) {
             const fileName = coverImage.path.split('\\').pop() + '.' + coverImage.name.split('.').pop();
-            fs.copyFile(coverImage.path, __dirname.split('\\controllers')[0] + '\\public\\images\\books\\' + fileName, function(err) {
+            fs.copyFile(coverImage.path, __dirname.split('\\controllers')[0] + '\\public\\images\\books\\' + fileName, function (err) {
                 if (err)
                     throw err;
             });
-            fields.cover = '/images/books/' + fileName;
+            cover = '/images/books/' + fileName;
         }
 
-
-        console.log(files);
-
         productsModel.updateProduct(id, cover, title, basePrice, imgs).then(() => {
-                res.redirect('/');
-            })
-            //console.log(id, cover, title, basePrice, imgs)
-            // console.log(coverImage);
+            res.redirect('/');
+        })
     });
-
-
-
 }

@@ -5,9 +5,11 @@ const indexController = require('../controllers/index.controller')
 
 /* GET home page. */
 router.get('/', indexController.index);
+router.get('/category', indexController.index);
 router.get('/addProduct', indexController.addProductRender);
-router.post('/addProduct', indexController.addProduct)
-router.post('/deleteProduct', indexController.deleteProduct)
-router.post('/updateProductRender', indexController.updateProductRender)
-router.post('/updateProduct',indexController.updateProduct)
+router.post('/addProduct', indexController.addProduct);
+router.post('/deleteProduct', indexController.deleteProduct);
+router.post('/updateProductRender', indexController.updateProductRender);
+router.post('/updateProduct',indexController.updateProduct);
+router.get('/search', indexController.index)
 module.exports = router;
