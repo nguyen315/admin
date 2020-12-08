@@ -2,11 +2,11 @@ const { db } = require('../db/db');
 const ObjectID = require('mongodb').ObjectID;
 
 
-exports.list = async () => {
+exports.list = async (page, perPage) => {
     // console.log('model db');
     const booksCollection = db().collection('books');
-    const books = await booksCollection.find({}).toArray();
-    // console.dir(books);
+    const books = await booksCollection.find({}).skip((page - 1) * perPage).limit(perPage);
+
     return books;
 }
 

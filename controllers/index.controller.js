@@ -1,20 +1,33 @@
 const productsModel = require('../models/products.model');
 
-
 exports.index = async function (req, res, next) {
+    const page = +req.query.page || 1;
+    const perPage = 10;
     // get books from models
-    const products = await productsModel.list();
-    // console.dir(products)
+    const productsCursor = await productsModel.list(page, perPage);
+    const products = await productsCursor.toArray();
+
+    let hasNextPage, hasPrevPage;
+    hasPrevPage = page > 1 ? true : false;
+    if (await productsCursor.count() > ((page - 1) * perPage + products.length) )
+        hasNextPage = true;
+    else 
+        hasNextPage = false;
+    
     // render page list
     res.render('index', { 
         title: 'Dashboard',
-        products 
+        products: products,
+        hasNextPage,
+        hasPrevPage,
+        currentPage: page
     });
+
 }
 
 exports.addProductRender = function (req, res, next) {
     res.render('form_additem', {
-        title: 'form add item'
+        title: 'Add Item'
     });
 }
 
@@ -52,7 +65,5 @@ exports.updateProduct = async function (req,res,next){
 
     // console.log(id, cover, title, basePrice, imgs)
     await productsModel.updateProduct(id,cover,title,basePrice,imgs)
-
-
     res.redirect('/');
 }

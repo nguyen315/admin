@@ -74,7 +74,10 @@ block content
             // ==============================================================
             .col-12
               .card
-                h5.card-header Product Lists
+                h5.card-header
+                  | Product Lists
+                  a.btn.btn-outline-light.float-right(href='/addProduct') Add Product
+                          
                 .card-body.p-0
                   .table-responsive
                     table.table
@@ -153,8 +156,23 @@ block content
                         //-     span.badge-dot.badge-success.mr-1
                         //-     | Delivered
                         //- tr
-                        td(colspan='9')
-                          a.btn.btn-outline-light.float-right(href='/addProduct') Add Product
+                        
+            .col-12
+              nav(aria-label='Page navigation example')
+                ul.pagination
+                  if hasPrevPage
+                    li.page-item
+                        a.page-link(href='?page=' + (currentPage - 1)) Previous
+                    li.page-item
+                        a.page-link(href='?page=' + (currentPage - 1)) #{currentPage - 1}
+                  li.page-item
+                    a.page-link(href='?page=' + currentPage) #{currentPage}
+                  if hasNextPage
+                    li.page-item
+                      a.page-link(href='?page=' + (currentPage + 1)) #{currentPage + 1}
+                    li.page-item
+                      a.page-link(href='?page=' + (currentPage + 1)) Next
+
                           
             // ==============================================================
             // end recent orders
