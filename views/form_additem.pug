@@ -8,13 +8,15 @@ block content
           div
             label Cover:
             br
-            input(type="text" name="cover" value=product.cover)
-            br
-            input(type="file",name= "coverImage")
+            input(type="file",name= "cover")
           div
             label Product Name:
             br
-            input(type="text" name="title" value=product.title)
+            input(type="text" name="name" value=product.name)
+          div
+            label Category:
+            br
+            input(type="text" name="category" value=product.title)
           div
             label Price:
             br
@@ -31,12 +33,16 @@ block content
           div
             label Cover:
             br
-            input(type="file",name= "coverImage")
+            input(type="file",name= "cover")
             
           div
             label Product name:
             br
-            input(type="text" name="title")
+            input(type="text" name="name")
+          div
+            label Category:
+            br
+            input(type="text" name="category")
           div
             label Price:
             br

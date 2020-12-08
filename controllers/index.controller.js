@@ -68,13 +68,33 @@ exports.addProductRender = function (req, res, next) {
 }
 
 exports.addProduct = async function (req, res, next) {
-    const cover = req.body.cover;
-    const name = req.body.title;
-    const basePrice = req.body.basePrice;
-    const imgs = req.body.imgs;
+    const form = formidable({ multiples: true });
+    form.parse(req, (err, fields, files) => {
+        let id = fields.id;
+        let cover = fields.cover;
+        let title = fields.category;
+        let basePrice = fields.basePrice;
+        let imgs = fields.imgs;
+        let name = fields.name;
 
-    await productsModel.addProduct(cover, name, basePrice, imgs);
-    res.redirect('/');
+        if (err) {
+            next(err);
+            return;
+        }
+        const coverImage = files.cover;
+        if (coverImage && coverImage.size > 0) {
+            const fileName = coverImage.path.split('/').pop() + '.' + coverImage.name.split('.').pop();
+            fs.copyFile(coverImage.path, __dirname.split('/controllers')[0] + '/public/images/books/' + fileName, function (err) {
+                if (err)
+                    throw err;
+            });
+            cover = '/images/books/' + fileName;
+        }
+
+        productsModel.addProduct(cover, name, title, basePrice, imgs).then(() => {
+            res.redirect('/');
+        })
+    });
 }
 
 exports.deleteProduct = async function (req, res, next) {
@@ -98,20 +118,20 @@ exports.updateProduct = async function (req, res, next) {
     const form = formidable({ multiples: true });
 
     form.parse(req, (err, fields, files) => {
-        const id = fields.id;
+        let id = fields.id;
         let cover = fields.cover;
-        const title = fields.title;
-        const basePrice = fields.basePrice;
-        const imgs = fields.imgs;
+        let title = fields.category;
+        let basePrice = fields.basePrice;
+        let imgs = fields.imgs;
 
         if (err) {
             next(err);
             return;
         }
-        const coverImage = files.coverImage;
+        const coverImage = files.cover;
         if (coverImage && coverImage.size > 0) {
-            const fileName = coverImage.path.split('\\').pop() + '.' + coverImage.name.split('.').pop();
-            fs.copyFile(coverImage.path, __dirname.split('\\controllers')[0] + '\\public\\images\\books\\' + fileName, function (err) {
+            const fileName = coverImage.path.split('/').pop() + '.' + coverImage.name.split('.').pop();
+            fs.copyFile(coverImage.path, __dirname.split('/controllers')[0] + '/public/images/books/' + fileName, function (err) {
                 if (err)
                     throw err;
             });

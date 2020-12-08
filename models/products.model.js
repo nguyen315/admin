@@ -22,12 +22,16 @@ exports.productById = async (id) => {
     return book;
 }
 
-exports.addProduct = async (cover, title, basePrice, imgs) => {
-    imgs = imgs.split(',')
-    imgs = imgs.map(x => x.trim())
+exports.addProduct = async (cover, name, title, basePrice, imgs) => {
+    if (imgs) {
+        imgs = imgs.split(',')
+        imgs = imgs.map(x => x.trim())
+    }
+    
     const booksCollection = db().collection('books');
     await booksCollection.insertOne({
         cover: cover,
+        name: name,
         title: title,
         basePrice: basePrice,
         imgs: imgs
