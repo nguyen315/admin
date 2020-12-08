@@ -1,8 +1,11 @@
+const formidable = require('formidable');
+const fs = require('fs');
+const path = require('path');
 const productsModel = require('../models/products.model');
 
 exports.index = async function (req, res, next) {
     const page = +req.query.page || 1;
-    const perPage = 1;
+    const perPage = 10;
     const category = req.query.category;
     const q = req.query.q;
     let pageLink = "";
@@ -22,7 +25,7 @@ exports.index = async function (req, res, next) {
         filter.name = new RegExp(q, 'i');
         pageLink += "&q=" + q;
     }
-    console.log(pageLink);
+    // console.log(pageLink);
 
     // get books from models
     const productsCursor = await productsModel.list(filter, page, perPage);
@@ -83,20 +86,40 @@ exports.deleteProduct = async function (req, res, next) {
 
 exports.updateProductRender = async function (req, res, next) {
     const id = req.body.id;
+
     // console.log("update render: ", id);
+
     const product = await productsModel.productById(id);
     res.render('form_additem', {
         product: product
     })
 }
 exports.updateProduct = async function (req, res, next) {
-    const id = req.body.id;
-    const cover = req.body.cover;
-    const title = req.body.title;
-    const basePrice = req.body.basePrice;
-    const imgs = req.body.imgs;
+    const form = formidable({ multiples: true });
 
-    // console.log(id, cover, title, basePrice, imgs)
-    await productsModel.updateProduct(id, cover, title, basePrice, imgs)
-    res.redirect('/');
+    form.parse(req, (err, fields, files) => {
+        const id = fields.id;
+        let cover = fields.cover;
+        const title = fields.title;
+        const basePrice = fields.basePrice;
+        const imgs = fields.imgs;
+
+        if (err) {
+            next(err);
+            return;
+        }
+        const coverImage = files.coverImage;
+        if (coverImage && coverImage.size > 0) {
+            const fileName = coverImage.path.split('\\').pop() + '.' + coverImage.name.split('.').pop();
+            fs.copyFile(coverImage.path, __dirname.split('\\controllers')[0] + '\\public\\images\\books\\' + fileName, function (err) {
+                if (err)
+                    throw err;
+            });
+            cover = '/images/books/' + fileName;
+        }
+
+        productsModel.updateProduct(id, cover, title, basePrice, imgs).then(() => {
+            res.redirect('/');
+        })
+    });
 }
