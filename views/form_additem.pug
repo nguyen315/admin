@@ -3,52 +3,44 @@ extends layout
 block content
   .dashboard-wrapper
     .container-fluid.dashboard-content
-      if product
-        form(action="/updateProduct", method="post",enctype = "multipart/form-data")
-          div
-            label Cover:
-            br
-            input(type="file",name= "cover")
-          div
-            label Product Name:
-            br
-            input(type="text" name="name" value=product.name)
-          div
-            label Category:
-            br
-            input(type="text" name="category" value=product.title)
-          div
-            label Price:
-            br
-            input(type="number" name="basePrice" value=product.basePrice)
-          div
-            label Images:
-            br
-            input(type="text" name="imgs" value=product.imgs)
-          input(type="hidden" name="id" value=product._id)
-          button.btn.btn-outline-light.m-t-30(type='submit') Save change
+      .row
+        .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
+          #basicform.section-block
+            if product
+              h3.section-title Edit Product
+            else
+              h3.section-title Add new item
 
-      else
-        form(action="/addProduct", method="post",enctype = "multipart/form-data")
-          div
-            label Cover:
-            br
-            input(type="file",name= "cover")
-            
-          div
-            label Product name:
-            br
-            input(type="text" name="name")
-          div
-            label Category:
-            br
-            input(type="text" name="category")
-          div
-            label Price:
-            br
-            input(type="number" name="basePrice")
-          div
-            label Images:
-            br
-            input(type="text" name="imgs")
-          button.btn.btn-outline-light.m-t-30(type='submit') Add
+          .card
+            .card-body
+              form(method="post" enctype = "multipart/form-data" )
+                .form-group
+                  label.col-form-label(for='inputText3') Product name:
+                  if product
+                    input#inputText3.form-control(type="text" name="name" value=product.name)
+                  else
+                    input#inputText3.form-control(type="text" name="name")
+                .form-group
+                  label.col-form-label(for='inputEmail') Category:
+                  if product
+                    input#inputEmail.form-control(type="text" name="category" value=product.title)
+                  else
+                    input#inputEmail.form-control(type="text" name="category")
+                .form-group
+                  label.col-form-label(for='inputText4') Price:
+                  if product
+                    input#inputText4.form-control(type="number" name="basePrice" value=product.basePrice)
+                  else
+                    input#inputText4.form-control(type="number" name="basePrice")
+                .form-group
+                  label.col-form-label(for='imgInp') Images:
+                  p You must select a file. Save change will delete all previous saved file.
+                  if product
+                    input#imgInp.form-control(type="file" name="imgs" multiple required)
+                if product
+                  input(type="hidden" name="id" value=product._id)
+                  button.btn.btn-outline-light.m-t-30(type='submit' formaction="/product/editProduct") Save Change
+                else 
+                  button.btn.btn-outline-light.m-t-30(type='submit' formaction="/product/addProduct") Add
+                
+      

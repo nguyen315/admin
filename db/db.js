@@ -1,9 +1,8 @@
 const { MongoClient } = require("mongodb");
-
-const uri = "mongodb+srv://hmnguyen315:W6sXhFWvaOGY7DIX@cluster0.psur2.gcp.mongodb.net/bookstore?retryWrites=true&w=majority"
+const uri = process.env.URI;
     
 // Create a new MongoClient
-const client = new MongoClient(uri, { useUnifiedTopology: true });
+const client = new MongoClient(uri, { useUnifiedTopology: true, useNewUrlParser:true });
 
 let database;
 

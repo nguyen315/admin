@@ -1,5 +1,5 @@
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
     'use strict';
 
     // ============================================================== 
@@ -32,7 +32,7 @@ jQuery(document).ready(function($) {
         $('.sidebar-nav-fixed a')
             // Remove links that don't actually link to anything
 
-            .click(function(event) {
+            .click(function (event) {
                 // On-page links
                 if (
                     location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') &&
@@ -47,7 +47,7 @@ jQuery(document).ready(function($) {
                         event.preventDefault();
                         $('html, body').animate({
                             scrollTop: target.offset().top - 90
-                        }, 1000, function() {
+                        }, 1000, function () {
                             // Callback after animation
                             // Must change focus!
                             var $target = $(target);
@@ -61,7 +61,7 @@ jQuery(document).ready(function($) {
                         });
                     }
                 };
-                $('.sidebar-nav-fixed a').each(function() {
+                $('.sidebar-nav-fixed a').each(function () {
                     $(this).removeClass('active');
                 })
                 $(this).addClass('active');
@@ -73,25 +73,25 @@ jQuery(document).ready(function($) {
     // tooltip
     // ============================================================== 
     if ($('[data-toggle="tooltip"]').length) {
-            
-            $('[data-toggle="tooltip"]').tooltip()
 
-        }
-
-     // ============================================================== 
-    // popover
-    // ============================================================== 
-       if ($('[data-toggle="popover"]').length) {
-            $('[data-toggle="popover"]').popover()
+        $('[data-toggle="tooltip"]').tooltip()
 
     }
-     // ============================================================== 
+
+    // ============================================================== 
+    // popover
+    // ============================================================== 
+    if ($('[data-toggle="popover"]').length) {
+        $('[data-toggle="popover"]').popover()
+
+    }
+    // ============================================================== 
     // Chat List Slim Scroll
     // ============================================================== 
-        
 
-        if ($('.chat-list').length) {
-            $('.chat-list').slimScroll({
+
+    if ($('.chat-list').length) {
+        $('.chat-list').slimScroll({
             color: 'false',
             width: '100%'
 
@@ -102,9 +102,11 @@ jQuery(document).ready(function($) {
     // dropzone script
     // ============================================================== 
 
- //     if ($('.dz-clickable').length) {
- //            $(".dz-clickable").dropzone({ url: "/file/post" });
- // }
+    //     if ($('.dz-clickable').length) {
+    //            $(".dz-clickable").dropzone({ url: "/file/post" });
+    // }
+
+    
 
 }); // AND OF JQUERY
 
@@ -113,20 +115,20 @@ jQuery(document).ready(function($) {
 //     "use strict";
 
 
-    
-
-   // var monkeyList = new List('test-list', {
-    //    valueNames: ['name']
-
-     // });
-  // var monkeyList = new List('test-list-2', {
-    //    valueNames: ['name']
-
-   // });
 
 
+// var monkeyList = new List('test-list', {
+//    valueNames: ['name']
 
-   
-   
+// });
+// var monkeyList = new List('test-list-2', {
+//    valueNames: ['name']
+
+// });
+
+
+
+
+
 
 // });

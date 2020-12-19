@@ -2,6 +2,8 @@ const formidable = require('formidable');
 const fs = require('fs');
 const path = require('path');
 const productsModel = require('../models/products.model');
+const cloudinary = require('../cloudinary/cloudinary');
+const { image } = require('../cloudinary/cloudinary');
 
 exports.index = async function (req, res, next) {
     const page = +req.query.page || 1;
@@ -52,7 +54,7 @@ exports.index = async function (req, res, next) {
         title: 'Dashboard',
         currentCategory: category,
         categories,
-        products: products,
+        products,
         hasNextPage,
         hasPrevPage,
         currentPage: page,
@@ -61,85 +63,89 @@ exports.index = async function (req, res, next) {
 
 }
 
-exports.addProductRender = function (req, res, next) {
+exports.addProduct = function (req, res, next) {
     res.render('form_additem', {
         title: 'Add Item'
     });
 }
 
-exports.addProduct = async function (req, res, next) {
+exports.postAddProduct = async function (req, res, next) {
     const form = formidable({ multiples: true });
-    form.parse(req, (err, fields, files) => {
-        let id = fields.id;
-        let cover = fields.cover;
+    form.parse(req, async (err, fields, files) => {
         let title = fields.category;
         let basePrice = fields.basePrice;
-        let imgs = fields.imgs;
         let name = fields.name;
+        let imgs = [];
 
         if (err) {
             next(err);
             return;
         }
-        const coverImage = files.cover;
-        if (coverImage && coverImage.size > 0) {
-            const fileName = coverImage.path.split('/').pop() + '.' + coverImage.name.split('.').pop();
-            fs.copyFile(coverImage.path, __dirname.split('/controllers')[0] + '/public/images/books/' + fileName, function (err) {
-                if (err)
-                    throw err;
-            });
-            cover = '/images/books/' + fileName;
+        const images = files.imgs;
+
+        if (Array.isArray(images)) {
+            for await (let image of images) {
+                const result = await cloudinary.uploader.upload(image.path);
+                imgs.push(result.url);
+            }
         }
 
-        productsModel.addProduct(cover, name, title, basePrice, imgs).then(() => {
+        else if (images && images.size > 0) {
+            const result = await cloudinary.uploader.upload(images.path);
+            imgs.push(result.url);
+        }
+        
+        productsModel.addProduct(name, title, basePrice, imgs).then(() => {
+            res.redirect('/');
+        })  
+    });
+}
+
+exports.editProduct = async function (req, res, next) {
+    const productId = req.params.productId;
+
+    const product = await productsModel.productById(productId);
+    res.render('form_additem', {
+        product: product
+    })
+}
+
+exports.postEditProduct = async function (req, res, next) {
+    const form = formidable({ multiples: true });
+    form.parse(req, async (err, fields, files) => {
+        let id = fields.id;
+        let title = fields.category;
+        let basePrice = fields.basePrice;
+        let name = fields.name;
+        let imgs = [];
+
+        if (err) {
+            next(err);
+            return;
+        }
+        const images = files.imgs;
+        console.log(imgs);
+
+        if (Array.isArray(images)) {
+            for await (let image of images) {
+                const result = await cloudinary.uploader.upload(image.path);
+                imgs.push(result.url);
+            }
+        }
+
+        else if (images && images.size > 0) {
+            const result = await cloudinary.uploader.upload(images.path);
+            imgs.push(result.url);
+        }
+
+        productsModel.updateProduct(id, name, title, basePrice, imgs).then(() => {
             res.redirect('/');
         })
     });
 }
 
 exports.deleteProduct = async function (req, res, next) {
-    const id = req.body.id
-    // console.log(id)
-    await productsModel.deleteProduct(id);
+    const productId = req.params.productId;
+    await productsModel.deleteProduct(productId);
     res.redirect('/');
-}
-
-exports.updateProductRender = async function (req, res, next) {
-    const id = req.body.id;
-
-    // console.log("update render: ", id);
-
-    const product = await productsModel.productById(id);
-    res.render('form_additem', {
-        product: product
-    })
-}
-exports.updateProduct = async function (req, res, next) {
-    const form = formidable({ multiples: true });
-
-    form.parse(req, (err, fields, files) => {
-        let id = fields.id;
-        let cover = fields.cover;
-        let title = fields.category;
-        let basePrice = fields.basePrice;
-        let imgs = fields.imgs;
-
-        if (err) {
-            next(err);
-            return;
-        }
-        const coverImage = files.cover;
-        if (coverImage && coverImage.size > 0) {
-            const fileName = coverImage.path.split('/').pop() + '.' + coverImage.name.split('.').pop();
-            fs.copyFile(coverImage.path, __dirname.split('/controllers')[0] + '/public/images/books/' + fileName, function (err) {
-                if (err)
-                    throw err;
-            });
-            cover = '/images/books/' + fileName;
-        }
-
-        productsModel.updateProduct(id, cover, title, basePrice, imgs).then(() => {
-            res.redirect('/');
-        })
-    });
 }

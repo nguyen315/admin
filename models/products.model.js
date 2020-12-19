@@ -3,7 +3,6 @@ const ObjectID = require('mongodb').ObjectID;
 
 
 exports.list = async (filter, page, perPage) => {
-    // console.log('model db');
     const booksCollection = db().collection('books');
     const books = await booksCollection.find(filter).skip((page - 1) * perPage).limit(perPage);
     return books;
@@ -18,19 +17,12 @@ exports.getAll = async() => {
 exports.productById = async (id) => {
     const booksCollection = db().collection('books');
     const book = await booksCollection.findOne({_id: ObjectID(id)});
-    // console.log(book)
     return book;
 }
 
-exports.addProduct = async (cover, name, title, basePrice, imgs) => {
-    if (imgs) {
-        imgs = imgs.split(',')
-        imgs = imgs.map(x => x.trim())
-    }
-    
+exports.addProduct = async (name, title, basePrice, imgs) => {
     const booksCollection = db().collection('books');
     await booksCollection.insertOne({
-        cover: cover,
         name: name,
         title: title,
         basePrice: basePrice,
@@ -43,11 +35,10 @@ exports.deleteProduct = async (id) => {
     await booksCollection.deleteOne({_id: ObjectID(id)});
 }
 
-exports.updateProduct = async (id, cover, title, basePrice, imgs) => {
-    imgs = imgs.split(',')
-    imgs = imgs.map(x => x.trim())
+exports.updateProduct = async (id, name, title, basePrice, imgs) => {
     const booksCollection = db().collection('books');
-    await booksCollection.updateOne({_id: ObjectID(id)}, {$set: { cover: cover,
+    await booksCollection.updateOne({_id: ObjectID(id)}, {$set: {
+                                                            name: name,
                                                             title: title,
                                                             basePrice: basePrice,
                                                             imgs: imgs}})
