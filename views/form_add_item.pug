@@ -19,13 +19,13 @@ block content
                   label.col-form-label(for='inputText3') Product name:
                   input#inputText3.form-control(type="text" name="name" value=product.name)
                 .form-group
-                  label.col-form-label(for='inputEmail') Category:
-                  input#inputEmail.form-control(type="text" name="category" value=product.title)
-                //- .form-group
-                //-   label(for="select-catogery") Category
-                //-   select#select-category.form-control(name="category")
-                //-     each category in categories
-                //-       option #{category.name}
+                  label(for="select-catogery-edit") Category
+                  select#select-category-edit.form-control(name="categoryId")
+                    each category in categories
+                      if category._id == currentCategoryId
+                        option(select='true' value=category._id) #{category.name}
+                      else
+                        option(value=category._id) #{category.name}
                 .form-group
                   label.col-form-label(for='inputText4') Price:
                   input#inputText4.form-control(type="number" name="basePrice" value=product.basePrice)
@@ -48,7 +48,7 @@ block content
                     select#select-category.form-control(name="categoryId")
                       each category in categories
                         option(value=category._id) #{category.name}
-                    .form-group
+                  .form-group
                     label.col-form-label(for='inputText4') Price:
                     input#inputText4.form-control(type="number" name="basePrice")
                   .form-group

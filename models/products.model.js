@@ -8,10 +8,10 @@ exports.list = async (filter, page, perPage) => {
     return books;
 }
 
-exports.getAll = async() => {
+exports.getNumberOfBooks = async(filter) => {
     const booksCollection = db().collection('books');
-    const books = await booksCollection.find({}).toArray();
-    return books;
+    const num = await booksCollection.find(filter).count();
+    return num;
 }
 
 exports.productById = async (id) => {
@@ -24,7 +24,7 @@ exports.addProduct = async (name, categoryId, basePrice, imgs) => {
     const booksCollection = db().collection('books');
     await booksCollection.insertOne({
         name: name,
-        categoryId: categoryId,
+        categoryId: ObjectID(categoryId),
         basePrice: basePrice,
         imgs: imgs
     })
@@ -35,29 +35,11 @@ exports.deleteProduct = async (id) => {
     await booksCollection.deleteOne({_id: ObjectID(id)});
 }
 
-exports.updateProduct = async (id, name, title, basePrice, imgs) => {
+exports.updateProduct = async (id, name, categoryId, basePrice, imgs) => {
     const booksCollection = db().collection('books');
     await booksCollection.updateOne({_id: ObjectID(id)}, {$set: {
                                                             name: name,
-                                                            title: title,
+                                                            categoryId: ObjectID(categoryId),
                                                             basePrice: basePrice,
                                                             imgs: imgs}})
-}
-
-exports.listCategory = async (filter, page, perPage) => {
-    const categoriesCollection = db().collection('categories');
-    const categories = await categoriesCollection.find(filter).skip((page - 1) * perPage).limit(perPage).toArray();
-    return categories;
-}
-
-exports.categoryById = async (categoryId) => {
-    const categoriesCollection = db().collection('categories');
-    const category = await categoriesCollection.findOne({_id: ObjectID(categoryId)});
-    return category;
-}
-
-exports.getAllCategories = async () => {
-    const categoriesCollection = db().collection('categories');
-    const categories = await categoriesCollection.find({}).toArray();
-    return categories;
 }

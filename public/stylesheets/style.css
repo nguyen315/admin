@@ -6975,3 +6975,9 @@ Media Query
 
 /* Custom, iPhone Retina */
 @media only screen and (max-width:320px) {}
+
+
+.d-flex {
+    min-height: 70px;
+    max-height: 70px;
+}

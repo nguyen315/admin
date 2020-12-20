@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  .dashboard-wrapper
+    .container-fluid.dashboard-content
+      .row
+        .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
+          #basicform.section-block
+            h3.section-title Add Category
+          .card
+            .card-body
+              form(method="post" action="/product/addCategory")
+                .form-group
+                  label.col-form-label(for='inputText3') Category name:
+                  input#inputText3.form-control(type="text" name="name")
+                button.btn.btn-outline-light.m-t-30(type='submit') Add
+                
+      

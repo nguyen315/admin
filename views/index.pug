@@ -36,6 +36,7 @@ block content
                 h5.card-header
                   | Product Lists
                   a.btn.btn-outline-light.float-right(href='/product/addProduct') Add Product
+                  a.btn.btn-outline-light.float-right(href='/product/addCategory') Add Category
                   form.form-inline(action='/product/search' method='get')
                     .form-group
                       input.form-control(type='text', name='q',placeholder='Nhập tên sách')
@@ -74,7 +75,7 @@ block content
                             td.col-2
                               .m-r-10
                                 if product.imgs
-                                  img.rounded(src=product.imgs[0] alt='cover' width='45')
+                                  img.rounded(src=product.imgs[0] alt='cover' width='45px' height='50px')
                             td.col-3 #{product.name}
                             //- td #{product._id} 
                             //- td 20 Số lượng sản phẩm --> thêm sau
@@ -94,9 +95,12 @@ block content
                 ul.pagination
                   if hasPrevPage
                     li.page-item
-                        a.page-link(href='?page=' + (currentPage - 1) + pageLink  ) Previous
+                      a.page-link(href='?page=' + (currentPage - 1) + pageLink  ) Previous
                     li.page-item
-                        a.page-link(href='?page=' + (currentPage - 1) + pageLink ) #{currentPage - 1}
+                      a.page-link(href='?page=' + (currentPage - 1) + pageLink ) #{currentPage - 1}
+                  else 
+                    li.page-item
+                      a.page-link( href='#') Previous
                   li.page-item.active
                     a.page-link(href='?page=' + currentPage ) #{currentPage}
                   if hasNextPage
@@ -104,6 +108,10 @@ block content
                       a.page-link(href='?page=' + (currentPage + 1) + pageLink ) #{currentPage + 1}
                     li.page-item
                       a.page-link(href='?page=' + (currentPage + 1) + pageLink ) Next
+                  else
+                    li.page-item
+                      a.page-link(href='#') Next
+                    
     .footer
       .container-fluid
         .row
