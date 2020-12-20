@@ -4,47 +4,46 @@ const path = require('path');
 const productsModel = require('../models/products.model');
 const cloudinary = require('../cloudinary/cloudinary');
 const { image } = require('../cloudinary/cloudinary');
+const { ObjectID } = require('mongodb');
 
 exports.index = async function (req, res, next) {
     const page = +req.query.page || 1;
     const perPage = 10;
-    const category = req.query.category;
+    const categoryId = req.query.categoryId;
     const q = req.query.q;
     let pageLink = "";
-    let currentCategory = "";
+    let currentCategoryId = "";
     let filter = {};
 
-    if (category == 'all') {
-        currentCategory = 'all'
+    if (categoryId == 'all') {
+        currentCategoryId = 'all'
     }
-    else if (category) {
-        filter.title = category;
-        currentCategory = category;
-        pageLink += "&category=" + category;
+    else if (categoryId) {
+        filter.categoryId = ObjectID(categoryId);
+        currentCategoryId = categoryId;
+        pageLink += "&category=" + categoryId;
     }
 
     if (q) {
         filter.name = new RegExp(q, 'i');
         pageLink += "&q=" + q;
     }
-    // console.log(pageLink);
 
     // get books from models
-    const productsCursor = await productsModel.list(filter, page, perPage);
-    const products = await productsCursor.toArray();
+    const products = await productsModel.list(filter, page, perPage);
+    let categoriesList = [];
+    for await (let product of products) {
+        categoriesList.push(await productsModel.categoryById(product.categoryId));
+    }
+    // console.log(categoriesList);
 
     // get all category
-    const allProducts = await productsModel.getAll();
-    var categories = [];
-    for (var i = 0; i < allProducts.length; i++) {
-        categories.push(allProducts[i].title);
-    }
-    categories = [...new Set(categories)];
+    let categories = await productsModel.getAllCategories();
 
     // Lấy các thông tin cho pagination
     let hasNextPage, hasPrevPage;
     hasPrevPage = page > 1 ? true : false;
-    if (await productsCursor.count() > ((page - 1) * perPage + products.length))
+    if (await products.length > ((page - 1) * perPage + products.length))
         hasNextPage = true;
     else
         hasNextPage = false;
@@ -52,29 +51,32 @@ exports.index = async function (req, res, next) {
     // render page list
     res.render('index', {
         title: 'Dashboard',
-        currentCategory: category,
+        currentCategoryId,
         categories,
         products,
         hasNextPage,
         hasPrevPage,
         currentPage: page,
-        pageLink
+        pageLink,
+        categoriesList
     });
 
 }
 
-exports.addProduct = function (req, res, next) {
+exports.addProduct = async function (req, res, next) {
+    const categories = await productsModel.getAllCategories();
     res.render('form_additem', {
-        title: 'Add Item'
+        title: 'Add Item',
+        categories
     });
 }
 
 exports.postAddProduct = async function (req, res, next) {
     const form = formidable({ multiples: true });
     form.parse(req, async (err, fields, files) => {
-        let title = fields.category;
-        let basePrice = fields.basePrice;
         let name = fields.name;
+        let categoryId = ObjectID(fields.categoryId);
+        let basePrice = fields.basePrice;
         let imgs = [];
 
         if (err) {
@@ -95,7 +97,7 @@ exports.postAddProduct = async function (req, res, next) {
             imgs.push(result.url);
         }
         
-        productsModel.addProduct(name, title, basePrice, imgs).then(() => {
+        productsModel.addProduct(name, categoryId, basePrice, imgs).then(() => {
             res.redirect('/');
         })  
     });

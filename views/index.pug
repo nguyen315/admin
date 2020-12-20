@@ -44,16 +44,16 @@ block content
                   
                   form(method='get' action='/product/category')
                     .form-group
-                      select.form-control(onchange='this.form.submit()' name='category')
-                        if currentCategory == 'all'
+                      select.form-control(onchange='this.form.submit()' name='categoryId')
+                        if currentCategoryId == 'all'
                           option(value='all' seleted='true') All Categories
                         else
                           option(value='all') All Categories
                         each category in categories
-                          if category == currentCategory
-                            option(selected='true') #{category}
+                          if category._id == currentCategoryId
+                            option(selected='true' value=category._id) #{category.name}
                           else
-                            option #{category}
+                            option(value=category._id) #{category.name}
 
                 .card-body.p-0
                   .table-responsive
@@ -61,26 +61,26 @@ block content
                       thead.bg-light
                         tr.border-0.d-flex
                           th.border-0.col-1 #
-                          th.border-0.col-1 Cover
+                          th.border-0.col-2 Cover
                           th.border-0.col-3 Product Name
                           th.border-0.col-3 Category
                           th.border-0.col-2 Base Price
-                          th.border-0.col-2 Action
+                          th.border-0.col-1 Action
                           //- th.border-0 Status
                       tbody
                         each product, index in products
                           tr.d-flex
                             td.col-1 #{index + 1}
-                            td.col-1
+                            td.col-2
                               .m-r-10
                                 if product.imgs
                                   img.rounded(src=product.imgs[0] alt='cover' width='45')
                             td.col-3 #{product.name}
                             //- td #{product._id} 
                             //- td 20 Số lượng sản phẩm --> thêm sau
-                            td.col-3 #{product.title}
+                            td.col-3 #{categoriesList[index].name}
                             td.col-2 #{product.basePrice}
-                            td.col-2
+                            td.col-1
                               
                               a(href="/product/edit/" + product._id) 
                                 i.fas.fa-edit Edit

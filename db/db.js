@@ -13,7 +13,6 @@ async function connectDb(){
     console.log('Db connected!');
 }
 
-// console.log('RUNNING DB...');
 
 connectDb();
 
