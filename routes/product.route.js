@@ -3,8 +3,11 @@ var router = express.Router();
 
 const productController = require('../controllers/product.controller');
 const categoryController = require('../controllers/category.controller');
+const authenticate = require('../authenticate/authenticate')
 
 /* GET home page. */
+router.use(authenticate.checkRole(authenticate.ROLES.admin));
+
 router.get('/', productController.index);
 router.get('/category', productController.index);
 router.get('/addProduct', productController.addProduct);

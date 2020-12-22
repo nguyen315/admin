@@ -25,3 +25,4 @@ exports.addCategory = async (name) => {
     name: name
   });
 }
+

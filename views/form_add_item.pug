@@ -13,29 +13,29 @@ block content
 
           if product
             .card
-            .card-body
-              form(method="post" enctype = "multipart/form-data" )
-                .form-group
-                  label.col-form-label(for='inputText3') Product name:
-                  input#inputText3.form-control(type="text" name="name" value=product.name)
-                .form-group
-                  label(for="select-catogery-edit") Category
-                  select#select-category-edit.form-control(name="categoryId")
-                    each category in categories
-                      if category._id == currentCategoryId
-                        option(select='true' value=category._id) #{category.name}
-                      else
-                        option(value=category._id) #{category.name}
-                .form-group
-                  label.col-form-label(for='inputText4') Price:
-                  input#inputText4.form-control(type="number" name="basePrice" value=product.basePrice)
-                .form-group
-                  label.col-form-label(for='imgInp') Images:
-                  p You must select a file. Save change will delete all previous saved file.
-                  if product
-                    input#imgInp.form-control(type="file" name="imgs" multiple required)
-                input(type="hidden" name="id" value=product._id)
-                button.btn.btn-outline-light.m-t-30(type='submit' formaction="/product/editProduct") Save Change
+              .card-body
+                form(method="post" enctype = "multipart/form-data" )
+                  .form-group
+                    label.col-form-label(for='inputText3') Product name:
+                    input#inputText3.form-control(type="text" name="name" value=product.name)
+                  .form-group
+                    label(for="select-catogery-edit") Category
+                    select#select-category-edit.form-control(name="categoryId")
+                      each category in categories
+                        if category._id == currentCategoryId
+                          option(select='true' value=category._id) #{category.name}
+                        else
+                          option(value=category._id) #{category.name}
+                  .form-group
+                    label.col-form-label(for='inputText4') Price:
+                    input#inputText4.form-control(type="number" name="basePrice" value=product.basePrice)
+                  .form-group
+                    label.col-form-label(for='imgInp') Images:
+                    p You must select a file. Save change will delete all previous saved file.
+                    if product
+                      input#imgInp.form-control(type="file" name="imgs" multiple required)
+                  input(type="hidden" name="id" value=product._id)
+                  button.btn.btn-outline-light.m-t-30(type='submit' formaction="/product/editProduct") Save Change
           else
             .card
               .card-body
