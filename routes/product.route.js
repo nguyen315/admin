@@ -3,7 +3,11 @@ var router = express.Router();
 
 const productController = require('../controllers/product.controller');
 const categoryController = require('../controllers/category.controller');
+<<<<<<< Updated upstream
 const authenticate = require('../authenticate/authenticate')
+=======
+const { route } = require('./users');
+>>>>>>> Stashed changes
 
 /* GET home page. */
 router.use(authenticate.checkRole(authenticate.ROLES.admin));
@@ -19,10 +23,8 @@ router.get('/addCategory', categoryController.addCategory);
 
 
 router.post('/addProduct', productController.postAddProduct);
-router.post('/editProduct',productController.postEditProduct);
+router.post('/editProduct', productController.postEditProduct);
 
 router.post('/addCategory', categoryController.postAddCategory);
-
-
 
 module.exports = router;

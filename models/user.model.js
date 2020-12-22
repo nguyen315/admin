@@ -1,4 +1,5 @@
 const { db } = require('../db/db');
+<<<<<<< Updated upstream
 const ObjectID = require('mongodb').ObjectID;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
@@ -40,4 +41,12 @@ exports.getUserById = async (id) => {
   const usersCollection = db().collection('users');
   const user = await usersCollection.findOne({_id: ObjectID(id)});
   return user;
+=======
+
+
+exports.getAllUserList = async() => {
+    const usersCollection = db().collection('users');
+    const users = await usersCollection.find({}).toArray();
+    return users;
+>>>>>>> Stashed changes
 }
