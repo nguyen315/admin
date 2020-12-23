@@ -19,7 +19,6 @@ exports.getAllCategories = async() => {
     return categories;
 }
 
-<<<<<<< Updated upstream
 exports.addCategory = async (name) => {
   const categoriesCollection = db().collection('categories');
   await categoriesCollection.insertOne({
@@ -27,11 +26,3 @@ exports.addCategory = async (name) => {
   });
 }
 
-=======
-exports.addCategory = async(name) => {
-    const categoriesCollection = db().collection('categories');
-    await categoriesCollection.insertOne({
-        name: name
-    });
-}
->>>>>>> Stashed changes

@@ -8,7 +8,6 @@ const authenticate = require('../authenticate/authenticate')
 
 /* GET home page. */
 router.get('/', indexController.index);
-<<<<<<< Updated upstream
 router.get('/register', userController.register);
 router.get('/login', userController.login);
 router.get('/userlist', function(req, res) {
@@ -22,6 +21,4 @@ router.post('/login', authenticate.auth, authenticate.checkRole(authenticate.ROL
     });
 
 router.get('/logout', userController.logout);
-=======
->>>>>>> Stashed changes
 module.exports = router;
