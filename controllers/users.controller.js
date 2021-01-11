@@ -1,14 +1,31 @@
 const e = require('express');
 const { render } = require('../app');
 const userListModel = require('../models/user.model');
+const categoryModel = require('../models/category.model');
 
 exports.getAlluser = async(req, res) => {
-    const list = userListModel.getAllUserList();
-    list.then(function(result) {
-        //console.log(list);
-        res.render('userlist', {
-            userlist: result
-        })
+    const page = +req.query.page || 1;
+    const perPage = 6;
+
+    const users = await userListModel.list(page, perPage);
+    const num = await userListModel.getNumOfUsers();
+    console.log(num);
+    console.log(page);
+
+    let hasNextPage, hasPrevPage;
+    hasPrevPage = page > 1 ? true : false;
+    if (num > ((page - 1) * perPage + users.length))
+        hasNextPage = true;
+    else
+        hasNextPage = false;
+
+
+    res.render('userlist', {
+        userlist: users,
+        hasNextPage,
+        hasPrevPage,
+        currentPage: page,
+
     })
 
 }
@@ -27,7 +44,8 @@ exports.updateUser = async(req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
-    const updateuser = await userListModel.updateDaTaUser(_id, firstName, lastName, email);
+    const role = req.body.role;
+    const updateuser = await userListModel.updateDaTaUser(_id, firstName, lastName, email, role);
     res.redirect('/users/userlist')
 }
 exports.getUserToDel = async(req, res) => {
@@ -45,4 +63,21 @@ exports.delUser = async(req, res) => {
     console.log("bat dau thuc thi");
     var delUser = await userListModel.delUser(_id);
     res.redirect('/users/userlist');
+}
+exports.index = async(req, res, next) => {
+
+    const page = +req.query.page || 1;
+    const perPage = 6;
+
+    const users = await userListModel.list(page, perPage);
+    const num = await userListModel.getNumOfUsers();
+    console.log(num);
+    console.log(page)
+
+    res.render('userlist', {
+        users: users
+    })
+
+
+
 }

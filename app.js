@@ -12,6 +12,7 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productRouter = require('./routes/product.route');
 const bodyParser = require('body-parser')
+const authenticate = require('./authenticate/authenticate');
 
 const { db } = require('./db/db')
 

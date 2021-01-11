@@ -1,6 +1,9 @@
 var express = require('express');
 const userlistController = require('../controllers/users.controller');
 var router = express.Router();
+const authenticate = require('../authenticate/authenticate')
+
+router.use(authenticate.checkRole(authenticate.ROLES.admin));
 /* GET users listing. */
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
@@ -13,4 +16,7 @@ router.get('/userlist/edit', userlistController.postIdUsers);
 router.post('/userlist/edit', userlistController.updateUser);
 router.get('/userlist/del', userlistController.getUserToDel);
 router.post('/userlist/del', userlistController.delUser);
+
+// router.get('/userlist', userlistController.index);
+// router.post('/userlist', userlistController.index);
 module.exports = router;
