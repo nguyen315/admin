@@ -39,13 +39,13 @@ app.use(passport.session());
 
 // Pass req.user to layout
 app.use((req, res, next) => {
-  res.locals.user = req.user;
-  next();
+    res.locals.user = req.user;
+    next();
 })
 
 // Routes
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', usersRouter);
 app.use('/product', productRouter);
 
 

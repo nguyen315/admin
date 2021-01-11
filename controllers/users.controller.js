@@ -7,10 +7,8 @@ exports.getAlluser = async(req, res) => {
     const page = +req.query.page || 1;
     const perPage = 6;
 
-    const users = await userListModel.list(page, perPage);
+    const users = await userListModel.list({ role: "customer" }, page, perPage);
     const num = await userListModel.getNumOfUsers();
-    console.log(num);
-    console.log(page);
 
     let hasNextPage, hasPrevPage;
     hasPrevPage = page > 1 ? true : false;
@@ -44,9 +42,8 @@ exports.updateUser = async(req, res) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
-    const role = req.body.role;
-    const updateuser = await userListModel.updateDaTaUser(_id, firstName, lastName, email, role);
-    res.redirect('/users/userlist')
+    const updateuser = await userListModel.updateDaTaUser(_id, firstName, lastName, email);
+    res.redirect('/')
 }
 exports.getUserToDel = async(req, res) => {
     const _id = req.query.id;
@@ -62,7 +59,7 @@ exports.delUser = async(req, res) => {
     console.log(user);
     console.log("bat dau thuc thi");
     var delUser = await userListModel.delUser(_id);
-    res.redirect('/users/userlist');
+    res.redirect('/');
 }
 exports.index = async(req, res, next) => {
 
@@ -77,7 +74,30 @@ exports.index = async(req, res, next) => {
     res.render('userlist', {
         users: users
     })
+}
+exports.getAlladmin = async(req, res) => {
+    const page = +req.query.page || 1;
+    const perPage = 6;
+
+    const admin = await userListModel.list({ role: "admin" }, page, perPage);
+    const num = await userListModel.getNumOfUsers();
+    console.log(num);
+    console.log(page);
+
+    let hasNextPage, hasPrevPage;
+    hasPrevPage = page > 1 ? true : false;
+    if (num > ((page - 1) * perPage + admin.length))
+        hasNextPage = true;
+    else
+        hasNextPage = false;
 
 
+    res.render('adminlist', {
+        userlist: admin,
+        hasNextPage,
+        hasPrevPage,
+        currentPage: page,
+
+    })
 
 }

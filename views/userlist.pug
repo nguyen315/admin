@@ -1,138 +1,14 @@
 extends layout
 
 block content
-  head
-    // Required meta tags
-    meta(charset='utf-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no')
-    // Bootstrap CSS
-    link(rel='stylesheet' href='../public/assets/vendor/bootstrap/css/bootstrap.min.css')
-    link(href='../public/assets/vendor/fonts/circular-std/style.css' rel='stylesheet')
-    link(rel='stylesheet' href='../public/assets/libs/css/style.css')
-    link(rel='stylesheet' href='../public/assets/vendor/fonts/fontawesome/css/fontawesome-all.css')
-    link(rel='stylesheet' href='../public/assets/vendor/charts/chartist-bundle/chartist.css')
-    link(rel='stylesheet' href='../public/assets/vendor/charts/morris-bundle/morris.css')
-    link(rel='stylesheet' href='../public/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css')
-    link(rel='stylesheet' href='../public/assets/vendor/charts/c3charts/c3.css')
-    link(rel='stylesheet' href='../public/assets/vendor/fonts/flag-icon-css/flag-icon.min.css')
-    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
-    link(rel='stylesheet' href='https://pro.fontawesome.com/releases/v5.10.0/css/all.css' )
-
-    title userlist
   // ==============================================================
   // main wrapper
   // ==============================================================
-  .dashboard-main-wrapper
+  .dashboard-wrapper
     // ==============================================================
     // navbar
     // ==============================================================
-    .dashboard-header
-      nav.navbar.navbar-expand-lg.bg-white.fixed-top
-        a.navbar-brand(href='index.html') Concept
-        button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
-          span.navbar-toggler-icon
-        #navbarSupportedContent.collapse.navbar-collapse
-          ul.navbar-nav.ml-auto.navbar-right-top
-            li.nav-item
-              #custom-search.top-search-bar
-                input.form-control(type='text' placeholder='Search..')
-            li.nav-item.dropdown.notification
-              a#navbarDropdownMenuLink1.nav-link.nav-icons(href='#' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-                i.fas.fa-fw.fa-bell
-                span.indicator
-              ul.dropdown-menu.dropdown-menu-right.notification-dropdown
-                li
-                  .notification-title  Notification
-                  .notification-list
-                    .list-group
-                      a.list-group-item.list-group-item-action.active(href='#')
-                        .notification-info
-                          .notification-list-user-img
-                            img.user-avatar-md.rounded-circle(src='../public/assets/images/avatar-2.jpg' alt='')
-                          .notification-list-user-block
-                            span.notification-list-user-name Jeremy Rakestraw
-                            | accepted your invitation to join the team.
-                            .notification-date 2 min ago
-                      a.list-group-item.list-group-item-action(href='#')
-                        .notification-info
-                          .notification-list-user-img
-                            img.user-avatar-md.rounded-circle(src='../public/assets/images/avatar-3.jpg' alt='')
-                          .notification-list-user-block
-                            span.notification-list-user-name John Abraham 
-                            | is now following you
-                            .notification-date 2 days ago
-                      a.list-group-item.list-group-item-action(href='#')
-                        .notification-info
-                          .notification-list-user-img
-                            img.user-avatar-md.rounded-circle(src='../public/assets/images/avatar-4.jpg' alt='')
-                          .notification-list-user-block
-                            span.notification-list-user-name Monaan Pechi
-                            |  is watching your main repository
-                            .notification-date 2 min ago
-                      a.list-group-item.list-group-item-action(href='#')
-                        .notification-info
-                          .notification-list-user-img
-                            img.user-avatar-md.rounded-circle(src='../public/assets/images/avatar-5.jpg' alt='')
-                          .notification-list-user-block
-                            span.notification-list-user-name Jessica Caruso
-                            | accepted your invitation to join the team.
-                            .notification-date 2 min ago
-                li
-                  .list-footer
-                    a(href='#') View all notifications
-            li.nav-item.dropdown.connection
-              a#navbarDropdown.nav-link(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-                i.fas.fa-fw.fa-th
-              ul.dropdown-menu.dropdown-menu-right.connection-dropdown
-                li.connection-list
-                  .row
-                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
-                      a.connection-item(href='#')
-                        img(src='../public/assets/images/github.png' alt='')
-                        span Github
-                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
-                      a.connection-item(href='#')
-                        img(src='../public/assets/images/dribbble.png' alt='')
-                        span Dribbble
-                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
-                      a.connection-item(href='#')
-                        img(src='../public/assets/images/dropbox.png' alt='')
-                        span Dropbox
-                  .row
-                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
-                      a.connection-item(href='#')
-                        img(src='../public/assets/images/bitbucket.png' alt='')
-                        span Bitbucket
-                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
-                      a.connection-item(href='#')
-                        img(src='../public/assets/images/mail_chimp.png' alt='')
-                        span Mail chimp
-                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
-                      a.connection-item(href='#')
-                        img(src='../public/assets/images/slack.png' alt='')
-                        span Slack
-                li
-                  .conntection-footer
-                    a(href='#') More
-            li.nav-item.dropdown.nav-user
-              a#navbarDropdownMenuLink2.nav-link.nav-user-img(href='#' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-                img.user-avatar-md.rounded-circle(src='../public/assets/images/avatar-1.jpg' alt='')
-              .dropdown-menu.dropdown-menu-right.nav-user-dropdown(aria-labelledby='navbarDropdownMenuLink2')
-                .nav-user-info
-                  h5.mb-0.text-white.nav-user-name John Abraham 
-                  span.status
-                  span.ml-2 Available
-                a.dropdown-item(href='#')
-                  i.fas.fa-user.mr-2
-                  | Account
-                a.dropdown-item(href='#')
-                  i.fas.fa-cog.mr-2
-                  | Setting
-                a.dropdown-item(href='#')
-                  i.fas.fa-power-off.mr-2
-                  | Logout
-    // ==============================================================
-    // end navbar
+    
     .row
       .col-sm-3
       .col-sm-9
@@ -158,8 +34,8 @@ block content
                 
                 td
                   .row
-                    a.btn.btn-primary( href='/users/userlist/edit?id=' + `${users._id}`  role='button')
-                      i.fa.fa-pencil(aria-hidden='true')
+                    //- a.btn.btn-primary( href='/users/userlist/edit?id=' + `${users._id}`  role='button')
+                    //-   i.fa.fa-pencil(aria-hidden='true')
                     a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
                      i.fa.fa-trash(aria-hidden='true')
             td     

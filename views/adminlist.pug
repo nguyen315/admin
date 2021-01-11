@@ -1,0 +1,190 @@
+extends layout
+
+block content
+  // ==============================================================
+  // main wrapper
+  // ==============================================================
+  .dashboard-wrapper
+    // ==============================================================
+    // navbar
+    // ==============================================================
+    //- .dashboard-header
+      nav.navbar.navbar-expand-lg.bg-white.fixed-top
+        a.navbar-brand(href='index.html') Concept
+        button.navbar-toggler(type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation')
+          span.navbar-toggler-icon
+        #navbarSupportedContent.collapse.navbar-collapse
+          ul.navbar-nav.ml-auto.navbar-right-top
+            li.nav-item
+              #custom-search.top-search-bar
+                input.form-control(type='text' placeholder='Search..')
+            li.nav-item.dropdown.notification
+              a#navbarDropdownMenuLink1.nav-link.nav-icons(href='#' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                i.fas.fa-fw.fa-bell
+                span.indicator
+              ul.dropdown-menu.dropdown-menu-right.notification-dropdown
+                li
+                  .notification-title  Notification
+                  .notification-list
+                    .list-group
+                      a.list-group-item.list-group-item-action.active(href='#')
+                        .notification-info
+                          .notification-list-user-img
+                            img.user-avatar-md.rounded-circle(src='../public/assets/images/avatar-2.jpg' alt='')
+                          .notification-list-user-block
+                            span.notification-list-user-name Jeremy Rakestraw
+                            | accepted your invitation to join the team.
+                            .notification-date 2 min ago
+                      a.list-group-item.list-group-item-action(href='#')
+                        .notification-info
+                          .notification-list-user-img
+                            img.user-avatar-md.rounded-circle(src='../public/assets/images/avatar-3.jpg' alt='')
+                          .notification-list-user-block
+                            span.notification-list-user-name John Abraham 
+                            | is now following you
+                            .notification-date 2 days ago
+                      a.list-group-item.list-group-item-action(href='#')
+                        .notification-info
+                          .notification-list-user-img
+                            img.user-avatar-md.rounded-circle(src='../public/assets/images/avatar-4.jpg' alt='')
+                          .notification-list-user-block
+                            span.notification-list-user-name Monaan Pechi
+                            |  is watching your main repository
+                            .notification-date 2 min ago
+                      a.list-group-item.list-group-item-action(href='#')
+                        .notification-info
+                          .notification-list-user-img
+                            img.user-avatar-md.rounded-circle(src='../public/assets/images/avatar-5.jpg' alt='')
+                          .notification-list-user-block
+                            span.notification-list-user-name Jessica Caruso
+                            | accepted your invitation to join the team.
+                            .notification-date 2 min ago
+                li
+                  .list-footer
+                    a(href='#') View all notifications
+            li.nav-item.dropdown.connection
+              a#navbarDropdown.nav-link(href='#' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                i.fas.fa-fw.fa-th
+              ul.dropdown-menu.dropdown-menu-right.connection-dropdown
+                li.connection-list
+                  .row
+                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
+                      a.connection-item(href='#')
+                        img(src='../public/assets/images/github.png' alt='')
+                        span Github
+                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
+                      a.connection-item(href='#')
+                        img(src='../public/assets/images/dribbble.png' alt='')
+                        span Dribbble
+                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
+                      a.connection-item(href='#')
+                        img(src='../public/assets/images/dropbox.png' alt='')
+                        span Dropbox
+                  .row
+                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
+                      a.connection-item(href='#')
+                        img(src='../public/assets/images/bitbucket.png' alt='')
+                        span Bitbucket
+                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
+                      a.connection-item(href='#')
+                        img(src='../public/assets/images/mail_chimp.png' alt='')
+                        span Mail chimp
+                    .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-12
+                      a.connection-item(href='#')
+                        img(src='../public/assets/images/slack.png' alt='')
+                        span Slack
+                li
+                  .conntection-footer
+                    a(href='#') More
+            li.nav-item.dropdown.nav-user
+              a#navbarDropdownMenuLink2.nav-link.nav-user-img(href='#' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                img.user-avatar-md.rounded-circle(src='../public/assets/images/avatar-1.jpg' alt='')
+              .dropdown-menu.dropdown-menu-right.nav-user-dropdown(aria-labelledby='navbarDropdownMenuLink2')
+                .nav-user-info
+                  h5.mb-0.text-white.nav-user-name John Abraham 
+                  span.status
+                  span.ml-2 Available
+                a.dropdown-item(href='#')
+                  i.fas.fa-user.mr-2
+                  | Account
+                a.dropdown-item(href='#')
+                  i.fas.fa-cog.mr-2
+                  | Setting
+                a.dropdown-item(href='#')
+                  i.fas.fa-power-off.mr-2
+                  | Logout
+    // ==============================================================
+    // end navbar
+    .row
+      .col-sm-3
+      .col-sm-9
+        table.table.table.m-t-40
+          thead
+            tr
+              //- th(scope='col') avatar
+              th(scope='col') fisrtName
+              th(scope='col') lastName
+              th(scope='col') role
+              th(scope='col') email   
+              th(scope='col') edit
+            
+
+              
+          tbody
+            each users in userlist
+              tr
+                th(scope='row') #{users.firstName}
+                td #{users.lastName}
+                td #{users.role}
+                td #{users.email}
+                
+                td
+                  .row
+                    //- a.btn.btn-primary( href='/users/userlist/edit?id=' + `${users._id}`  role='button')
+                    //-   i.fa.fa-pencil(aria-hidden='true')
+                    a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
+                     i.fa.fa-trash(aria-hidden='true')
+            td     
+              .row                 
+                .col-12
+                  nav(aria-label='Page navigation example')
+                    ul.pagination
+                      if hasPrevPage
+                        li.page-item
+                          a.page-link(href='?page=' + `${currentPage - 1}`   ) Previous
+                        li.page-item
+                          a.page-link(href='?page=' + `${currentPage - 1}`  ) #{currentPage - 1}
+                      else 
+                        li.page-item
+                          a.page-link( href='#') Previous
+                      li.page-item.active
+                        a.page-link(href='?page=' + `${currentPage}` ) #{currentPage}
+                      if hasNextPage
+                        li.page-item
+                          a.page-link(href='?page=' + `${currentPage + 1}`  ) #{currentPage + 1}
+                        li.page-item
+                          a.page-link(href='?page=' + `${currentPage + 1}`  ) Next
+                      else
+                        li.page-item
+                          a.page-link(href='#') Next
+                        
+
+  script(src='../public/assets/vendor/jquery/jquery-3.3.1.min.js')
+  // bootstap bundle js
+  script(src='../public/assets/vendor/bootstrap/js/bootstrap.bundle.js')
+  // slimscroll js
+  script(src='../public/assets/vendor/slimscroll/jquery.slimscroll.js')
+  // main js
+  script(src='../public/assets/libs/js/main-js.js')
+  // chart chartist js
+  script(src='../public/assets/vendor/charts/chartist-bundle/chartist.min.js')
+  // sparkline js
+  script(src='../public/assets/vendor/charts/sparkline/jquery.sparkline.js')
+  // morris js
+  script(src='../public/assets/vendor/charts/morris-bundle/raphael.min.js')
+  script(src='../public/assets/vendor/charts/morris-bundle/morris.js')
+  // chart c3 js
+  script(src='../public/assets/vendor/charts/c3charts/c3.min.js')
+  script(src='../public/assets/vendor/charts/c3charts/d3-5.4.0.min.js')
+  script(src='../public/assets/vendor/charts/c3charts/C3chartjs.js')
+  script(src='../public/assets/libs/js/dashboard-ecommerce.js')

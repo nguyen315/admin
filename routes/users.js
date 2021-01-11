@@ -9,14 +9,14 @@ router.get('/', function(req, res, next) {
     res.send('respond with a resource');
 });
 
-router.get('/userlist', userlistController.getAlluser);
-router.post('/userlist', userlistController.getAlluser);
+router.get('/users/userlist', userlistController.getAlluser);
+router.post('/users/userlist', userlistController.getAlluser);
 
-router.get('/userlist/edit', userlistController.postIdUsers);
-router.post('/userlist/edit', userlistController.updateUser);
-router.get('/userlist/del', userlistController.getUserToDel);
-router.post('/userlist/del', userlistController.delUser);
+router.get('/users/userlist/edit', userlistController.postIdUsers);
+router.post('/users/userlist/edit', userlistController.updateUser);
+router.get('/users/userlist/del', userlistController.getUserToDel);
+router.post('/users/userlist/del', userlistController.delUser);
 
-// router.get('/userlist', userlistController.index);
-// router.post('/userlist', userlistController.index);
+router.get('/adminlist', userlistController.getAlladmin);
+router.post('/adminlist', userlistController.getAlladmin);
 module.exports = router;
