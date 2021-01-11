@@ -8,6 +8,7 @@ exports.ROLES = {
 exports.auth = passport.authenticate('local', { failureRedirect: '/login' });
 
 exports.checkRole = (...roles) => async (req, res, next) => {
+  if (!roles) return next();
   if (!req.user) {
     res.redirect('/login');
   }
