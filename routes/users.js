@@ -13,4 +13,7 @@ router.get('/userlist/edit', userlistController.postIdUsers);
 router.post('/userlist/edit', userlistController.updateUser);
 router.get('/userlist/del', userlistController.getUserToDel);
 router.post('/userlist/del', userlistController.delUser);
+
+// router.get('/userlist', userlistController.index);
+// router.post('/userlist', userlistController.index);
 module.exports = router;

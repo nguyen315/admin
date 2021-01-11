@@ -142,7 +142,7 @@ block content
               //- th(scope='col') avatar
               th(scope='col') fisrtName
               th(scope='col') lastName
-              th(scope='col') username
+              th(scope='col') role
               th(scope='col') email   
               th(scope='col') edit
             
@@ -153,7 +153,7 @@ block content
               tr
                 th(scope='row') #{users.firstName}
                 td #{users.lastName}
-                td #{users.username}
+                td #{users.role}
                 td #{users.email}
                 
                 td
@@ -161,7 +161,31 @@ block content
                     a.btn.btn-primary( href='/users/userlist/edit?id=' + `${users._id}`  role='button')
                       i.fa.fa-pencil(aria-hidden='true')
                     a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
-                      i.fa.fa-trash(aria-hidden='true')
+                     i.fa.fa-trash(aria-hidden='true')
+            td     
+              .row                 
+                .col-12
+                  nav(aria-label='Page navigation example')
+                    ul.pagination
+                      if hasPrevPage
+                        li.page-item
+                          a.page-link(href='?page=' + `${currentPage - 1}`   ) Previous
+                        li.page-item
+                          a.page-link(href='?page=' + `${currentPage - 1}`  ) #{currentPage - 1}
+                      else 
+                        li.page-item
+                          a.page-link( href='#') Previous
+                      li.page-item.active
+                        a.page-link(href='?page=' + `${currentPage}` ) #{currentPage}
+                      if hasNextPage
+                        li.page-item
+                          a.page-link(href='?page=' + `${currentPage + 1}`  ) #{currentPage + 1}
+                        li.page-item
+                          a.page-link(href='?page=' + `${currentPage + 1}`  ) Next
+                      else
+                        li.page-item
+                          a.page-link(href='#') Next
+                        
 
   script(src='../public/assets/vendor/jquery/jquery-3.3.1.min.js')
   // bootstap bundle js

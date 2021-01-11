@@ -46,10 +46,10 @@ exports.getAllUserList = async() => {
     const users = await usersCollection.find({}).toArray();
     return users;
 }
-exports.updateDaTaUser = async(id, firstName, lastName, email) => {
+exports.updateDaTaUser = async(id, firstName, lastName, email, role) => {
     const user = db().collection('users');
 
-    user.updateOne({ _id: ObjectID(id) }, { $set: { firstName: firstName, lastName: lastName, email: email } }, function(err, res) {
+    user.updateOne({ _id: ObjectID(id) }, { $set: { firstName: firstName, lastName: lastName, email: email, role: role } }, function(err, res) {
         if (err) throw err;
         console.log('update success: ' + res.result.nModified + ' record');
 
@@ -61,4 +61,14 @@ exports.delUser = async(id) => {
         if (err) throw err;
         console.log('delete success: ' + res.result.n + ' record');
     });
+}
+exports.getNumOfUsers = async() => {
+    const usersCollection = db().collection('users');
+    const num = await usersCollection.find({}).count();
+    return num;
+}
+exports.list = async(page, perPage) => {
+    const userCollection = db().collection('users');
+    const users = await userCollection.find().skip((page * perPage) - perPage).limit(perPage).toArray();
+    return users;
 }
