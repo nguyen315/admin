@@ -5,17 +5,12 @@ var router = express.Router();
 router.get('/', function(req, res, next) {
     res.send('respond with a resource');
 });
-// router.get('/userlist', function(req, res) {
-//     const list = [
-//             { avatar: 'anh', firstName: 'luong', lastName: 'Nhan', username: 'luong nhan', password: 'luong trong nhan', email: 'asdasda' },
-//             { avatar: 'anh', firstName: 'luong', lastName: 'Nhan', username: 'luong nhan', password: 'luong trong nhan', email: 'asdasda' },
-//             { avatar: 'anh', firstName: 'luong', lastName: 'Nhan', username: 'luong nhan', password: 'luong trong nhan', email: 'asdasda' }
-//         ]
-//         //console.log(list);
-//     res.render('userlist', {
-//         userList: list
-//     });
-// });
+
 router.get('/userlist', userlistController.getAlluser);
 router.post('/userlist', userlistController.getAlluser);
+
+router.get('/userlist/edit', userlistController.postIdUsers);
+router.post('/userlist/edit', userlistController.updateUser);
+router.get('/userlist/del', userlistController.getUserToDel);
+router.post('/userlist/del', userlistController.delUser);
 module.exports = router;

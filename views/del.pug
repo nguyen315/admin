@@ -1,0 +1,25 @@
+link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
+script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
+link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css")
+block content
+    .container
+        form(action="", method="post")
+            .form-group
+                label(for='firstname') firstName
+                input#txtFirstName.form-control(type='text' name='firstName' readonly value=`${users.firstName}`)
+                label(for='lastName') lastName
+                input#txtLastName.form-control(type='text' name='lastName' readonly value=`${users.lastName}`)
+            .form-group
+                label(for='username') username
+                input#txtUsername.form-control(type='text' name='username' readonly value=`${users.username}`)
+                .form-group
+                label(for='email') email
+                input#txtEmail.form-control(type='text' name='email' readonly  value=`${users.email}`)
+                br
+                button.btn.btn-outline-success(type='submit')
+                    i.fa.fa-check(aria-hidden='true')
+                    |  Del
+                
+                a.btn.btn-outline-success(name='' id='' href='/users/userlist' role='button')
+                    i.fa.fa-backward(aria-hidden='true')
+                    |  Back

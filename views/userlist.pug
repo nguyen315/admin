@@ -15,6 +15,9 @@ block content
     link(rel='stylesheet' href='../public/assets/vendor/fonts/material-design-iconic-font/css/materialdesignicons.min.css')
     link(rel='stylesheet' href='../public/assets/vendor/charts/c3charts/c3.css')
     link(rel='stylesheet' href='../public/assets/vendor/fonts/flag-icon-css/flag-icon.min.css')
+    link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
+    link(rel='stylesheet' href='https://pro.fontawesome.com/releases/v5.10.0/css/all.css' )
+
     title userlist
   // ==============================================================
   // main wrapper
@@ -136,21 +139,30 @@ block content
         table.table.table.m-t-40
           thead
             tr
-              th(scope='col') avatar
+              //- th(scope='col') avatar
               th(scope='col') fisrtName
               th(scope='col') lastName
               th(scope='col') username
-              th(scope='col') password
               th(scope='col') email   
+              th(scope='col') edit
+            
+
+              
           tbody
             each users in userlist
               tr
-                th(scope='row') #{users.avatar}
-                td #{users.firstName}
+                th(scope='row') #{users.firstName}
                 td #{users.lastName}
                 td #{users.username}
-                td #{users.password}
                 td #{users.email}
+                
+                td
+                  .row
+                    a.btn.btn-primary( href='/users/userlist/edit?id=' + `${users._id}`  role='button')
+                      i.fa.fa-pencil(aria-hidden='true')
+                    a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
+                      i.fa.fa-trash(aria-hidden='true')
+
   script(src='../public/assets/vendor/jquery/jquery-3.3.1.min.js')
   // bootstap bundle js
   script(src='../public/assets/vendor/bootstrap/js/bootstrap.bundle.js')
