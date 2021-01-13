@@ -19,4 +19,5 @@ router.post('/users/userlist/del', userlistController.delUser);
 
 router.get('/adminlist', userlistController.getAlladmin);
 router.post('/adminlist', userlistController.getAlladmin);
+
 module.exports = router;

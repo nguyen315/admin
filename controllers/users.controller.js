@@ -78,11 +78,17 @@ exports.index = async(req, res, next) => {
 exports.getAlladmin = async(req, res) => {
     const page = +req.query.page || 1;
     const perPage = 6;
-
+    const _id = req.query.id;
+    //console.log(_id);
+    //console.log(_id)
     const admin = await userListModel.list({ role: "admin" }, page, perPage);
+    for (const user of admin) {
+        if (user._id == _id) {
+            user.isMine = true;
+            console.log(user.isMine);
+        }
+    }
     const num = await userListModel.getNumOfUsers();
-    console.log(num);
-    console.log(page);
 
     let hasNextPage, hasPrevPage;
     hasPrevPage = page > 1 ? true : false;

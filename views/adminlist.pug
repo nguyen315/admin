@@ -140,10 +140,11 @@ block content
                 
                 td
                   .row
-                    //- a.btn.btn-primary( href='/users/userlist/edit?id=' + `${users._id}`  role='button')
-                    //-   i.fa.fa-pencil(aria-hidden='true')
-                    a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
-                     i.fa.fa-trash(aria-hidden='true')
+                    if users.isMine
+                      
+                    else
+                      a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
+                        i.fa.fa-trash(aria-hidden='true')
             td     
               .row                 
                 .col-12
