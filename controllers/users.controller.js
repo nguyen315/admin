@@ -6,10 +6,13 @@ const categoryModel = require('../models/category.model');
 exports.getAlluser = async(req, res) => {
     const page = +req.query.page || 1;
     const perPage = 6;
+    // const _id = req.query.id;
+    // console.log(_id);
 
     const users = await userListModel.list({ role: "customer" }, page, perPage);
     const num = await userListModel.getNumOfUsers();
-
+    // const status = "inactive";
+    // const temp = await userListModel.updateStatusUser(_id, status)
     let hasNextPage, hasPrevPage;
     hasPrevPage = page > 1 ? true : false;
     if (num > ((page - 1) * perPage + users.length))
@@ -36,7 +39,7 @@ exports.postIdUsers = async(req, res) => {
 }
 exports.updateUser = async(req, res) => {
     const _id = req.query.id;
-    const user = await userListModel.getUserById(_id);
+    // const user = await userListModel.getUserById(_id);
 
     //console.log(user);
     const firstName = req.body.firstName;
@@ -106,4 +109,18 @@ exports.getAlladmin = async(req, res) => {
 
     })
 
+}
+exports.uploadStatus = async(req, res) => {
+    const _id = req.query.id;
+    console.log(_id);
+    const user = await userListModel.getUserById(_id);
+    console.log(user.status);
+    if (user.status == 'active') {
+        await userListModel.updateStatusUser(_id, "inative");
+        console.log(1);
+    } else {
+        await userListModel.updateStatusUser(_id, "active");
+        console.log(2);
+    }
+    res.redirect('/');
 }

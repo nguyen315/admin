@@ -55,6 +55,15 @@ exports.updateDaTaUser = async(id, firstName, lastName, email) => {
 
     });
 }
+exports.updateStatusUser = async(id, status) => {
+    const user = db().collection('users');
+    user.updateOne({ _id: ObjectID(id) }, { $set: { status: status } }, function(err, res) {
+        if (err) throw err;
+        console.log('update success: ' + res.result.nModified + ' record');
+
+    });
+
+}
 exports.delUser = async(id) => {
     const user = db().collection('users');
     user.deleteOne({ _id: ObjectID(id) }, function(err, res) {

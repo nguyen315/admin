@@ -20,4 +20,7 @@ router.post('/users/userlist/del', userlistController.delUser);
 router.get('/adminlist', userlistController.getAlladmin);
 router.post('/adminlist', userlistController.getAlladmin);
 
+router.get('/users/userlist/updateStatus', userlistController.uploadStatus);
+router.post('/users/userlist/updateStatus', userlistController.uploadStatus);
+
 module.exports = router;

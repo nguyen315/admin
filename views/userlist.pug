@@ -21,6 +21,7 @@ block content
               th(scope='col') role
               th(scope='col') email   
               th(scope='col') edit
+              th(scope='col') status
             
 
               
@@ -38,6 +39,11 @@ block content
                     //-   i.fa.fa-pencil(aria-hidden='true')
                     a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
                      i.fa.fa-trash(aria-hidden='true')
+                td
+                  .row
+                      
+                      a.btn.btn-primary( href='/users/userlist/updateStatus?id=' + `${users._id}` role='button')
+                        i.fa.fa-trash(aria-hidden='true')
             td     
               .row                 
                 .col-12
