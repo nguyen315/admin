@@ -1,33 +1,37 @@
-extends layout_login
+extends layout
 
 block content
-  form.splash-container(method="post" action="/register")
-    .card
-      .card-header
-        h3.mb-1 Registrations Form
-        p Please enter your user information.
-      .card-body
-        .form
-          .form-group
-            input.form-control.form-control-lg(type='text' name='firstname' required='false' placeholder='First name' autocomplete='off')
-          .form-group
-            input.form-control.form-control-lg(type='text' name='lastname' required='false' placeholder='Last name' autocomplete='off')
-          .form-group
-            input.form-control.form-control-lg(type='text' name='username' required='true' placeholder='Username' autocomplete='off')
-          .form-group
-            input.form-control.form-control-lg(type='email' name='email' required='true' placeholder='E-mail' autocomplete='off')
-          .form-group
-            input#pass1.form-control.form-control-lg(type='password' name='password' required='true' placeholder='Password')
-          //- .form-group
-          //-   input.form-control.form-control-lg(type='password' required='true' placeholder='Confirm password')
-          //- .form-group.pt-2
-          button.btn.btn-block.btn-primary(type='submit') Register My Account
-        //- .form-group.row.pt-0
-        //-   .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12.mb-2
-        //-     button.btn.btn-block.btn-social.btn-facebook(type='button') Facebook
-        //-   .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
-        //-     button.btn.btn-block.btn-social.btn-twitter(type='button') Twitter
-      .card-footer.bg-white
-        p
-          | Already member? 
-          a.text-secondary(href='/login') Login Here.
+  .dashboard-wrapper
+    .container-fluid.dashboard-content
+      .row
+        .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
+          #basicform.section-block
+            h3.section-title Add New Admin
+
+          .card
+            .card-body
+              form(method="post" action="/users/addAdmin")
+                
+                if errors
+                  each error in errors
+                    .alert.alert-danger(role='alert') #{error}
+                     
+                .form-group
+                  label.col-form-label First Name
+                  input.form-control.form-control-lg(type='text' name='firstname' required='false' autocomplete='off')
+                .form-group
+                  label.col-form-label Last Name
+                  input.form-control.form-control-lg(type='text' name='lastname' required='false' autocomplete='off')
+                .form-group
+                  label.col-form-label Username
+                  input.form-control.form-control-lg(type='text' name='username' required='true'  autocomplete='off')
+                .form-group
+                  label.col-form-label E-mail
+                  input.form-control.form-control-lg(type='email' name='email' required='true'  autocomplete='off')
+                .form-group
+                  label.col-form-label Password
+                  input#pass1.form-control.form-control-lg(type='password' name='password' required='true' )
+                .form-group
+                  label.col-form-label Retype Password
+                  input#pass1.form-control.form-control-lg(type='password' name='retypePassword' required='true' )
+                button.btn.btn-primary.m-t-30(type='submit') Add New Admin

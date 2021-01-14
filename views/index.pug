@@ -28,8 +28,8 @@ block content
               .card
                 h5.card-header
                   | Product Lists
-                  a.btn.btn-outline-light.float-right(href='/product/addProduct') Add Product
-                  a.btn.btn-outline-light.float-right(href='/product/addCategory') Add Category
+                  a.btn.btn-primary.float-right.ml-2(href='/product/addProduct') Add Product
+                  a.btn.btn-primary.float-right(href='/product/addCategory') Add Category
                   form.form-inline(action='/product/search' method='get')
                     .form-group
                       input.form-control(type='text', name='q',placeholder='Nhập tên sách')

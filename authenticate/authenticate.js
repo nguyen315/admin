@@ -5,7 +5,7 @@ exports.ROLES = {
   customer: 'customer'
 }
 
-exports.auth = passport.authenticate('local', { failureRedirect: '/login' });
+exports.auth = passport.authenticate('local', { failureRedirect: '/login' , failureFlash : true});
 
 exports.checkRole = (...roles) => async (req, res, next) => {
   if (!roles) return next();
@@ -14,19 +14,18 @@ exports.checkRole = (...roles) => async (req, res, next) => {
   }
   const hasRole = roles.find(role => req.user.role === role);
   if (!hasRole) {
-    console.log(100000);
     res.redirect('/logout');
   }
   return next();
 }
 
-exports.checkActive = () => {
+exports.checkActive = () => (req, res, next) => {
   if (!req.user) {
     res.redirect('/login');
   }
-  else {
-    if (req.user.status != "active") {
-
-    }
+  else if (req.user.status != "active") {
+    req.flash('active', 'Your account is inactive');
+    res.redirect('/logout');
   }
+  return next();
 }

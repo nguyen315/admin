@@ -6,6 +6,7 @@ const authenticate = require('../authenticate/authenticate')
 const { route } = require('./users');
 
 /* GET home page. */
+router.use(authenticate.checkActive());
 router.use(authenticate.checkRole(authenticate.ROLES.admin));
 
 router.get('/', productController.index);

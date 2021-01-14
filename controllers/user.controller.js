@@ -23,11 +23,17 @@ exports.postRegister = async (req, res, next) => {
 }
 
 exports.login = (req, res, next) => {
+  let message = req.flash('error');
+  let messageCheckAvtive = req.flash('active');
+  if (messageCheckAvtive == 0) messageCheckAvtive = undefined;
+  if (message.length == 0) message = undefined
   if (req.user) {
     res.redirect('/');
   }
   res.render('login', {
-    title: 'Login'
+    title: 'Login',
+    message,
+    messageCheckAvtive
   });
 }
 
@@ -58,3 +64,21 @@ exports.logout = (req, res, next) => {
 }
 
 
+
+exports.getAddAdmin = (req, res, next) => {
+  res.render('register');
+}
+
+exports.addAdmin = async (req, res, next) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const email = req.body.email;
+  const firstName = req.body.firstname;
+  const lastName = req.body.lastname;
+
+  // check if exist username or not
+
+  // save username and password to database
+  await userModel.addUser(username, password, email, firstName, lastName);
+  res.redirect('back');
+}

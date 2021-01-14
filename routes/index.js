@@ -9,7 +9,6 @@ const { route } = require('./users');
 
 /* GET home page. */
 router.get('/', indexController.index);
-router.get('/register', userController.register);
 router.get('/login', userController.login);
 
 router.post('/register', userController.postRegister);

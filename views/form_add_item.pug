@@ -35,7 +35,7 @@ block content
                     if product
                       input#imgInp.form-control(type="file" name="imgs" multiple required)
                   input(type="hidden" name="id" value=product._id)
-                  button.btn.btn-outline-light.m-t-30(type='submit' formaction="/product/editProduct") Save Change
+                  button.btn.btn-primary.m-t-30(type='submit' formaction="/product/editProduct") Save Change
           else
             .card
               .card-body
@@ -54,6 +54,6 @@ block content
                   .form-group
                     label.col-form-label(for='imgInp') Images:
                     input#imgInp.form-control(type="file" name="imgs" multiple required)
-                  button.btn.btn-outline-light.m-t-30(type='submit' formaction="/product/addProduct") Add
+                  button.btn.btn-primary.m-t-30(type='submit' formaction="/product/addProduct") Add New Item
                 
       

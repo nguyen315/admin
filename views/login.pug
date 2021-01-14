@@ -3,6 +3,10 @@ extends layout_login
 block content
   .splash-container
     .card
+      if messageCheckAvtive
+        .alert.alert-danger(role='alert') #{messageCheckAvtive} 
+      if message
+        .alert.alert-danger(role='alert') #{message} 
       .card-header.text-center
         span.splash-description Please enter your user information.
       .card-body

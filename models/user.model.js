@@ -86,3 +86,9 @@ exports.updatePassword = async (id, newPassword) => {
     const userCollection = db().collection('users');
     await userCollection.updateOne({ _id: ObjectID(id) }, { $set: { password: newPassword } });
 }
+
+exports.getUserByUsername = async (username) => {
+    const userCollection = db().collection('users');
+    const user = await userCollection.findOne({username: username});
+    return user;
+}
