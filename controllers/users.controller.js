@@ -132,4 +132,11 @@ exports.uploadStatus = async(req, res) => {
     }
     res.redirect('/');
 }
+exports.viewProfile = async(req, res) => {
+    const _id = req.query.id;
+    const user = await userListModel.getUserById(_id);
 
+    res.render('profile', {
+        users: user,
+    });
+}

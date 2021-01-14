@@ -27,4 +27,7 @@ router.post('/userlist/updateStatus', userlistController.uploadStatus);
 
 router.post('/changePassword', userController.changePassword);
 
+
+router.get('/userlist/profile', userlistController.viewProfile);
+router.get('/userlist/profile', userlistController.viewProfile);
 module.exports = router;
