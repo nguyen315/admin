@@ -126,7 +126,6 @@ exports.uploadStatus = async(req, res) => {
 }
 exports.viewProfile = async(req, res) => {
     const _id = req.query.id;
-    console.log("!!!!!!!!!!!!!!!!!!!!!!!!!")
     const user = await userListModel.getUserById(_id);
 
     res.render('profile', {
