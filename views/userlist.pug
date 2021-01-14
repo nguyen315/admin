@@ -20,7 +20,7 @@ block content
               th(scope='col') lastName
               th(scope='col') role
               th(scope='col') email   
-              th(scope='col') edit
+              th(scope='col') description
               th(scope='col') status
             
 
@@ -37,8 +37,8 @@ block content
                   .row
                     //- a.btn.btn-primary( href='/users/userlist/edit?id=' + `${users._id}`  role='button')
                     //-   i.fa.fa-pencil(aria-hidden='true')
-                    a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
-                     i.fa.fa-trash(aria-hidden='true')
+                    a.btn.btn-primary( href='/users/userlist/profile?id=' + `${users._id}` role='button')
+                     i.fa.fa-eye(aria-hidden='true')
                 td
                   .row
                       

@@ -263,6 +263,14 @@ head
                 a.nav-link(href='/users/userlist') User Manage
               li.nav-item
                 a.nav-link(href='/adminlist?id='+`${user._id}`) admin Manage
+              
+              .dropdown
+                button#dropdownMenuButton.btn.btn-secondary.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                  | Thống kê
+                .dropdown-menu(aria-labelledby='dropdownMenuButton')
+                  a.dropdown-item(href='#') Action
+                  a.dropdown-item(href='#') Another action
+                  a.dropdown-item(href='#') Something else here
   body 
     block content
 

@@ -13,7 +13,6 @@ router.get('/users/userlist', userlistController.getAlluser);
 router.post('/users/userlist', userlistController.getAlluser);
 
 router.get('/users/userlist/edit', userlistController.postIdUsers);
-router.post('/users/userlist/edit', userlistController.updateUser);
 router.get('/users/userlist/del', userlistController.getUserToDel);
 router.post('/users/userlist/del', userlistController.delUser);
 
@@ -23,4 +22,7 @@ router.post('/adminlist', userlistController.getAlladmin);
 router.get('/users/userlist/updateStatus', userlistController.uploadStatus);
 router.post('/users/userlist/updateStatus', userlistController.uploadStatus);
 
+
+router.get('/users/userlist/profile', userlistController.viewProfile);
+router.get('/users/userlist/profile', userlistController.viewProfile);
 module.exports = router;

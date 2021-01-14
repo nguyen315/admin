@@ -77,7 +77,13 @@ exports.getNumOfUsers = async() => {
     return num;
 }
 exports.list = async(filter, page, perPage) => {
-    const userCollection = db().collection('users');
-    const users = await userCollection.find(filter).skip((page * perPage) - perPage).limit(perPage).toArray();
-    return users;
-}
+        const userCollection = db().collection('users');
+        const users = await userCollection.find(filter).skip((page * perPage) - perPage).limit(perPage).toArray();
+        return users;
+    }
+    // exports.getBuyOrder = async() => {
+    //     const userCollection = db().collection('users');
+    //     const product = await userCollection.find();
+    //     return product;
+
+// }
