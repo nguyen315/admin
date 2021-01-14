@@ -12,6 +12,7 @@ const passport = require('./authenticate/passport');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const productRouter = require('./routes/product.route');
+const cartsRouter = require('./routes/carts.route');
 const bodyParser = require('body-parser')
 const authenticate = require('./authenticate/authenticate');
 
@@ -49,6 +50,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/product', productRouter);
+app.use('/carts', cartsRouter);
 
 
 

@@ -13,7 +13,7 @@ block content
         .row
           .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
             .page-header
-              h2.pageheader-title Product Lists
+              h2.pageheader-title Cart list
               
         // ==============================================================
         // end pageheader
@@ -27,60 +27,74 @@ block content
             .col-12
               .card
                 h5.card-header
-                  | Product Lists
-                  a.btn.btn-primary.float-right.ml-2(href='/product/addProduct') Add Product
-                  a.btn.btn-primary.float-right(href='/product/addCategory') Add Category
-                  form.form-inline(action='/product/search' method='get')
+                  | Carts List
+                  form(method='get' action='/carts/category')
                     .form-group
-                      input.form-control(type='text', name='q',placeholder='Nhập tên sách')
-                    button.btn(type='submit')
-                      i.fa.fa-search
-                  
-                  form(method='get' action='/product/category')
-                    .form-group
-                      select.form-control(onchange='this.form.submit()' name='categoryId')
+                      select.form-control(onchange='this.form.submit()' name='status')
                         if currentCategoryId == 'all'
-                          option(value='all' selected='true') All Categories
+                          option(value='all' selected='true') All Status
                         else
-                          option(value='all') All Categories
-                        each category in categories
-                          if category._id == currentCategoryId
-                            option(selected='true' value=category._id) #{category.name}
-                          else
-                            option(value=category._id) #{category.name}
+                          option(value='all') All Status
+
+                        if currentStatus=="pending"
+                          option(value="pending" selected='true') pending
+                        else 
+                          option(value="pending") pending
+
+                        if currentStatus=="delivering"
+                          option(value="delivering" selected='true') delivering
+                        else 
+                          option(value="delivering") delivering
+
+                        if currentStatus=="success"
+                          option(value="success" selected='true') success
+                        else 
+                          option(value="success") success
+                        
+                        //- each category in categories
+                        //-   if category._id == currentCategoryId
+                        //-     option(selected='true' value=category._id) #{category.name}
+                        //-   else
+                        //-     option(value=category._id) #{category.name}
+                        
 
                 .card-body.p-0
                   .table-responsive
                     table.table
                       thead.bg-light
                         tr.border-0.d-flex
-                          th.border-0.col-1 #
-                          th.border-0.col-2 Cover
-                          th.border-0.col-3 Product Name
-                          th.border-0.col-3 Category
-                          th.border-0.col-2 Base Price
-                          th.border-0.col-1 Action
+                          th.border-0.col-1 ID
+                          th.border-0.col-2 Phone
+                          th.border-0.col-3 Address
+                          
+                          th.border-0.col-1 Status
+                          th.border-0.col-2 Continue Process
+                          th.border-0.col-2 Cancel
+                          th.border-0.col-1 Detail
                           //- th.border-0 Status
                       tbody
-                        each product, index in products
+                        each cart in carts
                           tr.d-flex
-                            td.col-1 #{index + 1}
-                            td.col-2
-                              .m-r-10
-                                if product.imgs
-                                  img.rounded(src=product.imgs[0] alt='cover' width='45px' height='50px')
-                            td.col-3 #{product.name}
+                            td.col-1 #{cart._id}
+                            
+                            td.col-2 #{cart.phone} 
+                            td.col-3 #{cart.address}
                             //- td #{product._id} 
                             //- td 20 Số lượng sản phẩm --> thêm sau
-                            td.col-3 #{categoriesList[index].name}
-                            td.col-2 #{product.basePrice}
+                            
+                            td.col-1 #{cart.status}
+                            td.col-2
+                                if cart.status != "success"
+                                    a(href="/carts/process/" + cart._id) Continue Process
+                                
+                            td.col-2
+                              if cart.status == "pending"
+                                a(href="/carts/cancel/" + cart._id) 
+                                    i.fas.fa-trash-alt  Cancel
+                            
                             td.col-1
-                              
-                              a(href="/product/edit/" + product._id) 
-                                i.fas.fa-edit Edit
-                              br
-                              a(href="/product/delete/" + product._id) 
-                                i.fas.fa-trash-alt  Delete
+                                a(href="#" + cart._id) Detail
+                                
 
                         
             .col-12
