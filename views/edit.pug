@@ -1,21 +1,47 @@
-link(rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css')
-script(src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js')
-link(rel="stylesheet", href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css")
+extends layout
+
 block content
-    .container
-        form(action="", method="post")
-            .form-group
-                label(for='firstname') firstName
-                input#txtFirstName.form-control(type='text' name='firstName' value=`${users.firstName}`)
-                label(for='lastName') lastName
-                input#txtLastName.form-control(type='text' name='lastName' value=`${users.lastName}`)
-            .form-group
-                
-                .form-group
-                label(for='email') email
-                input#txtEmail.form-control(type='text' name='email'  value=`${users.email}`)
-                br
-                button.btn.btn-outline-success(type='submit')
-                    i.fa.fa-check(aria-hidden='true')
-                    |  Save
-                
+    .dashboard-wrapper
+        .dashboard-ecommerce
+            .container-fluid.dashboard-content
+                // ==============================================================
+                // pageheader
+                // ==============================================================
+                .row
+                    .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
+                        .page-header
+                            h2.pageheader-title User Infomation
+                h3 
+                form(action="", method="post")
+                    .form-group
+                        label(for='firstname') firstName
+                        input#txtFirstName.form-control(type='text' name='firstName' value=`${users.firstName}`)
+                        label(for='lastName') lastName
+                        input#txtLastName.form-control(type='text' name='lastName' value=`${users.lastName}`)
+                    .form-group
+                        
+                        .form-group
+                        label(for='email') email
+                        input#txtEmail.form-control(type='text' name='email'  value=`${users.email}`)
+                        br
+                        button.btn.btn-primary(type='submit')
+                            i.fa.fa-check(aria-hidden='true')
+                            |  Save
+
+                h2.mt-5 Change Password 
+                if messageError
+                    .alert.alert-danger(role='alert') #{messageError} 
+                if messageSuccess
+                    .alert.alert-success(role='alert') #{messageSuccess}   
+                form(action="/users/changePassword", method="post")
+                    .form-group
+                        label(for='oldPassword') old password
+                        input#txtFirstName.form-control(type='password' name='oldPassword')
+                        label(for='newPassword') new password
+                        input#txtLastName.form-control(type='password' name='newPassword')
+                        label(for='checkNewPassword') input new password again
+                        input#txtLastName.form-control(type='password' name='checkNewPassword')
+                        br
+                        button.btn.btn-primary(type='submit')
+                            i.fa.fa-check(aria-hidden='true')
+                            |  Submit

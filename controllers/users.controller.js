@@ -33,9 +33,17 @@ exports.getAlluser = async(req, res) => {
 exports.postIdUsers = async(req, res) => {
     const _id = req.query.id;
     const user = await userListModel.getUserById(_id);
+    let messageError = req.flash('error');
+    if (messageError.length == 0) messageError = undefined;
+    let messageSuccess = req.flash('success');
+    if (messageSuccess.length == 0) messageSuccess = undefined;
+    // console.log(messageError, messageSuccess);
     res.render('edit', {
-        users: user
-    })
+        users: user,
+        messageError,
+        messageSuccess
+    });
+    
 }
 exports.updateUser = async(req, res) => {
     const _id = req.query.id;
@@ -124,3 +132,4 @@ exports.uploadStatus = async(req, res) => {
     }
     res.redirect('/');
 }
+

@@ -1,90 +1,114 @@
 extends layout
 
 block content
-  // ==============================================================
-  // main wrapper
-  // ==============================================================
+
   .dashboard-wrapper
-    // ==============================================================
-    // navbar
-    // ==============================================================
-    
-    .row
-      .col-sm-3
-      .col-sm-9
-        table.table.table.m-t-40
-          thead
-            tr
-              //- th(scope='col') avatar
-              th(scope='col') fisrtName
-              th(scope='col') lastName
-              th(scope='col') role
-              th(scope='col') email   
-              th(scope='col') edit
-              th(scope='col') status
-            
-
-              
-          tbody
-            each users in userlist
-              tr
-                th(scope='row') #{users.firstName}
-                td #{users.lastName}
-                td #{users.role}
-                td #{users.email}
+      .dashboard-ecommerce
+        .container-fluid.dashboard-content
+          // ==============================================================
+          // pageheader
+          // ==============================================================
+          .row
+            .col-xl-12.col-lg-12.col-md-12.col-sm-12.col-12
+              .page-header
+                h2.pageheader-title User Manager
+          .row
+            .col-12
+              .card
+                .card-body.p-0
+                  .table-responsive
+                    table.table
+                      thead.bg-light
+                        tr.border-0.d-flex
+                          th.border-0.col-2 fisrt name
+                          th.border-0.col-2 last name
+                          th.border-0.col-1 role
+                          th.border-0.col-3 email
+                          th.border-0.col-1 edit
+                          th.border-0.col-1 status
+                          //- th.border-0 Status
+                      tbody
+                        each users in userlist
+                          tr.d-flex
+                            td.col-2(scope='row') #{users.firstName}
+                            td.col-2 #{users.lastName}
+                            td.col-1 #{users.role}
+                            td.col-3 #{users.email}
+                            td.col-1
+                              .row
+                                a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
+                                  i.fa.fa-trash(aria-hidden='true')
+                            td.col-1
+                              .row
+                                  a.btn.btn-primary( href='/users/userlist/updateStatus?id=' + `${users._id}` role='button')
+                                    i.fa.fa-trash(aria-hidden='true')
+                        //- each product, index in products
+                        //-   tr.d-flex
+                        //-     td.col-1 #{index + 1}
+                        //-     td.col-2
+                        //-       .m-r-10
+                        //-         if product.imgs
+                        //-           img.rounded(src=product.imgs[0] alt='cover' width='45px' height='50px')
+                        //-     td.col-3 #{product.name}
+                        //-     //- td #{product._id} 
+                        //-     //- td 20 Số lượng sản phẩm --> thêm sau
+                        //-     td.col-3 #{categoriesList[index].name}
+                        //-     td.col-2 #{product.basePrice}
+                        //-     td.col-1
+                              
+                        //-       a(href="/product/edit/" + product._id) 
+                        //-         i.fas.fa-edit Edit
+                        //-       br
+                        //-       a(href="/product/delete/" + product._id) 
+                        //-         i.fas.fa-trash-alt  Delete
+            //- .col-sm-9
+            //-   table.table.table.m-t-40
+            //-     thead
+            //-       tr
+            //-         //- th(scope='col') avatar
+            //-         th(scope='col') fisrtName
+            //-         th(scope='col') lastName
+            //-         th(scope='col') role
+            //-         th(scope='col') email   
+            //-         th(scope='col') edit
+            //-         th(scope='col') status
                 
-                td
-                  .row
-                    //- a.btn.btn-primary( href='/users/userlist/edit?id=' + `${users._id}`  role='button')
-                    //-   i.fa.fa-pencil(aria-hidden='true')
-                    a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
-                     i.fa.fa-trash(aria-hidden='true')
-                td
-                  .row
-                      
-                      a.btn.btn-primary( href='/users/userlist/updateStatus?id=' + `${users._id}` role='button')
-                        i.fa.fa-trash(aria-hidden='true')
-            td     
-              .row                 
-                .col-12
-                  nav(aria-label='Page navigation example')
-                    ul.pagination
-                      if hasPrevPage
-                        li.page-item
-                          a.page-link(href='?page=' + `${currentPage - 1}`   ) Previous
-                        li.page-item
-                          a.page-link(href='?page=' + `${currentPage - 1}`  ) #{currentPage - 1}
-                      else 
-                        li.page-item
-                          a.page-link( href='#') Previous
-                      li.page-item.active
-                        a.page-link(href='?page=' + `${currentPage}` ) #{currentPage}
-                      if hasNextPage
-                        li.page-item
-                          a.page-link(href='?page=' + `${currentPage + 1}`  ) #{currentPage + 1}
-                        li.page-item
-                          a.page-link(href='?page=' + `${currentPage + 1}`  ) Next
-                      else
-                        li.page-item
-                          a.page-link(href='#') Next
-                        
-
-  script(src='../public/assets/vendor/jquery/jquery-3.3.1.min.js')
-  // bootstap bundle js
-  script(src='../public/assets/vendor/bootstrap/js/bootstrap.bundle.js')
-  // slimscroll js
-  script(src='../public/assets/vendor/slimscroll/jquery.slimscroll.js')
-  // main js
-  script(src='../public/assets/libs/js/main-js.js')
-  // chart chartist js
-  script(src='../public/assets/vendor/charts/chartist-bundle/chartist.min.js')
-  // sparkline js
-  script(src='../public/assets/vendor/charts/sparkline/jquery.sparkline.js')
-  // morris js
-  script(src='../public/assets/vendor/charts/morris-bundle/raphael.min.js')
-  script(src='../public/assets/vendor/charts/morris-bundle/morris.js')
-  // chart c3 js
-  script(src='../public/assets/vendor/charts/c3charts/c3.min.js')
-  script(src='../public/assets/vendor/charts/c3charts/d3-5.4.0.min.js')
-  script(src='../public/assets/vendor/charts/c3charts/C3chartjs.js')
-  script(src='../public/assets/libs/js/dashboard-ecommerce.js')
+            //-     tbody
+                  each users in userlist
+                    tr
+                      th(scope='row') #{users.firstName}
+                      td #{users.lastName}
+                      td #{users.role}
+                      td #{users.email}
+                      td
+                        .row
+                          a.btn.btn-primary( href='/users/userlist/del?id=' + `${users._id}` role='button')
+                          i.fa.fa-trash(aria-hidden='true')
+                      td
+                        .row
+                            a.btn.btn-primary( href='/users/userlist/updateStatus?id=' + `${users._id}` role='button')
+                              i.fa.fa-trash(aria-hidden='true')
+            //-       td     
+            //-         .row                 
+            //-           .col-12
+            //-             nav(aria-label='Page navigation example')
+            //-               ul.pagination
+            //-                 if hasPrevPage
+            //-                   li.page-item
+            //-                     a.page-link(href='?page=' + `${currentPage - 1}`   ) Previous
+            //-                   li.page-item
+            //-                     a.page-link(href='?page=' + `${currentPage - 1}`  ) #{currentPage - 1}
+            //-                 else 
+            //-                   li.page-item
+            //-                     a.page-link( href='#') Previous
+            //-                 li.page-item.active
+            //-                   a.page-link(href='?page=' + `${currentPage}` ) #{currentPage}
+            //-                 if hasNextPage
+            //-                   li.page-item
+            //-                     a.page-link(href='?page=' + `${currentPage + 1}`  ) #{currentPage + 1}
+            //-                   li.page-item
+            //-                     a.page-link(href='?page=' + `${currentPage + 1}`  ) Next
+            //-                 else
+            //-                   li.page-item
+            //-                     a.page-link(href='#') Next
+                              

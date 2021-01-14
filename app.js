@@ -4,6 +4,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var flash = require('connect-flash');
 const session = require('express-session');
 
 const passport = require('./authenticate/passport');
@@ -31,6 +32,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(flash());
 
 // Passport middleware
 app.use(session({ secret: process.env.SESSION_SCRET }));
@@ -45,7 +47,7 @@ app.use((req, res, next) => {
 
 // Routes
 app.use('/', indexRouter);
-app.use('/', usersRouter);
+app.use('/users', usersRouter);
 app.use('/product', productRouter);
 
 
